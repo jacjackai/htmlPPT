@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML PPT - 演示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .demo-header h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .demo-header p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        .demo-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .feature-card {
+            background: var(--slide-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .demo-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .demo-actions button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .demo-actions button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .demo-actions button.secondary {
+            background: var(--secondary-color);
+        }
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .stat-card {
+            background: var(--slide-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .stat-card .label {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        .demo-code {
+            background: var(--code-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 3rem;
+        }
+        .demo-code h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .demo-code pre {
+            margin: 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        .demo-code code {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎨 HTML PPT</h1>
+            <p>零依赖、纯前端、开箱即用的演示文稿制作工具</p>
+        </div>
+
+        <div class="demo-features">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>零依赖</h3>
+                <p>纯HTML/CSS/JavaScript，无需构建工具</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-moon"></i>
+                <h3>深色模式</h3>
+                <p>完美支持明暗主题切换</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-save"></i>
+                <h3>自动保存</h3>
+                <p>基于localStorage的实时保存</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-share-alt"></i>
+                <h3>一键分享</h3>
+                <p>通过URL参数轻松分享</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>响应式</h3>
+                <p>完美适配各种设备</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-keyboard"></i>
+                <h3>快捷键</h3>
+                <p>丰富的键盘快捷键支持</p>
+            </div>
+        </div>
+
+        <div class="demo-stats">
+            <div class="stat-card">
+                <div class="number"><50KB</div>
+                <div class="label">核心代码大小</div>
+            </div>
+            <div class="stat-card">
+                <div class="number"><1s</div>
+                <div class="label">首屏加载时间</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">60fps</div>
+                <div class="label">流畅动画</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">100%</div>
+                <div class="label">离线可用</div>
+            </div>
+        </div>
+
+        <div class="demo-actions">
+            <button onclick="window.location.href='../index.html'">
+                <i class="fas fa-play"></i> 开始使用
+            </button>
+            <button class="secondary" onclick="window.location.href='basic.html'">
+                <i class="fas fa-code"></i> 查看示例
+            </button>
+            <button class="secondary" onclick="window.open('https://github.com/yourname/htmlppt')">
+                <i class="fab fa-github"></i> GitHub
+            </button>
+        </div>
+
+        <div class="demo-code">
+            <h3>🚀 快速开始</h3>
+            <pre><code>// 创建应用实例
+const app = new HTMLPPT({
+    theme: 'light',
+    autoSave: true
+});
+
+// 添加幻灯片
+app.addSlide({
+    title: '欢迎使用 HTML PPT',
+    content: '这是一个零依赖的演示文稿制作工具'
+});
+
+// 进入演示模式
+app.present();</code></pre>
+        </div>
+
+        <div class="demo-code">
+            <h3>📦 安装方式</h3>
+            <pre><code># NPM 安装
+npm install htmlppt
+
+# CDN 引入
+<script src="https://cdn.jsdelivr.net/npm/htmlppt/dist/js/main.js"></script>
+
+# 直接使用
+git clone https://github.com/yourname/htmlppt.git
+cd htmlppt
+open src/index.html</code></pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import HTMLPPT from '../js/main.js';
+
+        // 创建演示应用
+        const app = new HTMLPPT({
+            theme: 'light',
+            autoSave: true
+        });
+
+        // 添加演示幻灯片
+        app.on('ready', () => {
+            console.log('HTML PPT 演示应用已就绪');
+            
+            app.addSlide({
+                title: '欢迎使用 HTML PPT',
+                content: '零依赖、纯前端、开箱即用的演示文稿制作工具'
+            });
+
+            app.addSlide({
+                title: '核心特性',
+                content: '• 零依赖 - 纯HTML/CSS/JavaScript\n• 深色模式 - 完美支持明暗主题\n• 自动保存 - 基于localStorage\n• 一键分享 - URL参数分享\n• 响应式 - 完美适配各种设备\n• 快捷键 - 丰富的键盘支持'
+            });
+
+            app.addSlide({
+                title: '性能优势',
+                content: '• 核心代码小于50KB\n• 首屏加载时间小于1秒\n• 60fps流畅动画\n• 低内存占用\n• 100%离线可用'
+            });
+
+            app.addSlide({
+                title: '开始使用',
+                content: '点击"开始使用"按钮，立即体验 HTML PPT！\n\n或者查看代码示例，了解如何集成到你的项目中。'
+            });
+
+            console.log('已添加 4 张演示幻灯片');
+        });
+
+        // 监听事件
+        app.on('slide:change', (index, slide) => {
+            console.log('当前幻灯片:', slide.title);
+        });
+
+        // 暴露到全局
+        window.app = app;
+    </script>
+</body>
+</html>

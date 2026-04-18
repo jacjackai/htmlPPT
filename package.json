@@ -1,0 +1,78 @@
+{
+  "name": "htmlppt",
+  "version": "1.0.0",
+  "description": "🎨 零依赖、纯前端、开箱即用的演示文稿制作工具",
+  "main": "src/index.html",
+  "scripts": {
+    "dev": "live-server src --port=8080 --open=/index.html",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "postcss src/css/*.css -o dist/css/styles.css",
+    "build:js": "webpack --mode production",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/js/**/*.js",
+    "lint:fix": "eslint src/js/**/*.js --fix",
+    "format": "prettier --write \"src/**/*.{js,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{js,css,html}\"",
+    "validate": "npm run lint && npm run format:check && npm run test",
+    "precommit": "npm run validate",
+    "prepush": "npm run validate",
+    "release": "standard-version",
+    "deploy": "gh-pages -d dist"
+  },
+  "keywords": [
+    "presentation",
+    "slides",
+    "ppt",
+    "powerpoint",
+    "web-based",
+    "zero-dependency",
+    "frontend",
+    "javascript",
+    "html5",
+    "css3"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/htmlppt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourname/htmlppt/issues"
+  },
+  "homepage": "https://github.com/yourname/htmlppt#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "gh-pages": "^6.1.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "live-server": "^1.2.2",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^11.0.0",
+    "prettier": "^3.0.3",
+    "standard-version": "^9.5.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ]
+}

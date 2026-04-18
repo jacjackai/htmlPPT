@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML PPT - 网页演示文稿制作工具</title>
+    <meta name="description" content="零依赖、纯前端、开箱即用的演示文稿制作工具" />
+    <meta name="keywords" content="PPT,演示文稿,幻灯片,前端,JavaScript" />
+    <meta name="author" content="Your Name" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h2>幻灯片</h2>
+          <button class="toggle-sidebar tooltip" id="toggleSidebar" data-tooltip="切换侧边栏">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+        <button class="add-slide-btn" id="addSlide">
+          <i class="fas fa-plus"></i>
+          <span>新建幻灯片</span>
+        </button>
+        <div class="slides-list" id="slidesList"></div>
+      </div>
+
+      <div class="main-content">
+        <div class="header">
+          <div class="header-left">
+            <h1 id="projectTitle">未命名项目</h1>
+          </div>
+          <div class="header-buttons">
+            <button class="header-btn new-btn" id="newProject" title="新建项目">
+              <i class="fas fa-file"></i>
+            </button>
+            <button class="header-btn open-btn" id="openProject" title="打开项目">
+              <i class="fas fa-folder-open"></i>
+            </button>
+            <button class="header-btn save-btn" id="saveProject" title="保存项目">
+              <i class="fas fa-save"></i>
+            </button>
+            <button class="header-btn export-btn" id="exportProject" title="导出项目">
+              <i class="fas fa-download"></i>
+            </button>
+            <button class="header-btn undo-btn" id="undoBtn" title="撤销">
+              <i class="fas fa-undo"></i>
+            </button>
+            <button class="header-btn redo-btn" id="redoBtn" title="重做">
+              <i class="fas fa-redo"></i>
+            </button>
+            <button class="header-btn" id="themeToggle" title="切换主题">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="header-btn present-btn" id="presentBtn" title="演示模式">
+              <i class="fas fa-play"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-container">
+          <div class="editor-panel">
+            <div class="panel-header">
+              <h3>编辑</h3>
+            </div>
+            <div class="editor-content">
+              <div class="form-group">
+                <label for="slideTitle">标题</label>
+                <input type="text" id="slideTitle" placeholder="输入幻灯片标题" />
+              </div>
+              <div class="form-group">
+                <label for="slideContent">内容</label>
+                <textarea id="slideContent" placeholder="输入幻灯片内容（支持Markdown）"></textarea>
+              </div>
+              <div class="editor-actions">
+                <button class="btn btn-primary" id="updateSlide">
+                  <i class="fas fa-check"></i> 更新
+                </button>
+                <button class="btn btn-secondary" id="previewSlide">
+                  <i class="fas fa-eye"></i> 预览
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-panel">
+            <div class="panel-header">
+              <h3>预览</h3>
+            </div>
+            <div class="preview-content">
+              <div class="slide-preview" id="slidePreview">
+                <h2 id="previewTitle"></h2>
+                <div id="previewContent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAB (Floating Action Button) -->
+    <div class="fab-container">
+      <div class="fab-options" id="fabOptions">
+        <button class="fab-option" id="fabAddSlide" title="新建幻灯片">
+          <i class="fas fa-plus"></i>
+        </button>
+        <button class="fab-option" id="fabPresent" title="演示模式">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="fab-option" id="fabSave" title="保存">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+      <button class="fab fab-main" id="fabMain">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+
+    <!-- Presentation Mode -->
+    <div class="presentation-mode" id="presentationMode">
+      <div class="presentation-slide" id="presentationSlide">
+        <h2 id="presentTitle"></h2>
+        <div id="presentContent"></div>
+      </div>
+      <div class="presentation-controls">
+        <button class="present-control-btn" id="presentPrev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="present-info">
+          <span id="presentPage">1 / 1</span>
+        </div>
+        <button class="present-control-btn" id="presentNext">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="present-control-btn present-exit" id="presentExit">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>分享演示文稿</h3>
+          <button class="modal-close" id="closeShareModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="shareLink">分享链接</label>
+            <div class="input-group">
+              <input type="text" id="shareLink" readonly />
+              <button class="btn btn-primary" id="copyShareLink">
+                <i class="fas fa-copy"></i> 复制
+              </button>
+            </div>
+          </div>
+          <div class="share-info">
+            <p>
+              <i class="fas fa-info-circle"></i>
+              复制链接后发送给他人，他们可以直接查看你的演示文稿。
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn modal-btn-secondary" id="cancelShare">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Hidden file input for opening projects -->
+    <input type="file" id="fileInput" accept=".json" style="display: none" />
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+  </body>
+</html>

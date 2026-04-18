@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML PPT - 示例</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .example-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .example-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .example-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .example-header p {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        .example-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--slide-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+        .example-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .code-block {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block pre {
+            margin: 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .code-block code {
+            color: #333;
+        }
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .demo-buttons button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .demo-buttons button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .demo-buttons button.secondary {
+            background: var(--secondary-color);
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .info-box.warning {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+        }
+        .info-box.success {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="example-container">
+        <div class="example-header">
+            <h1>🎨 HTML PPT 使用示例</h1>
+            <p>零依赖、纯前端、开箱即用的演示文稿制作工具</p>
+        </div>
+
+        <div class="example-section">
+            <h2>📦 基础使用</h2>
+            <div class="info-box">
+                <strong>提示：</strong> HTML PPT 可以通过 CDN 或 npm 安装使用
+            </div>
+            
+            <h3>CDN 引入</h3>
+            <div class="code-block">
+                <pre><code><script src="https://cdn.jsdelivr.net/npm/htmlppt/dist/js/main.js"></script></code></pre>
+            </div>
+
+            <h3>NPM 安装</h3>
+            <div class="code-block">
+                <pre><code>npm install htmlppt
+
+import HTMLPPT from 'htmlppt';</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🚀 快速开始</h2>
+            <div class="code-block">
+                <pre><code>// 创建应用实例
+const app = new HTMLPPT({
+    theme: 'light',
+    autoSave: true,
+    autoSaveInterval: 30000
+});
+
+// 添加幻灯片
+app.addSlide({
+    title: '欢迎使用 HTML PPT',
+    content: '这是一个零依赖的演示文稿制作工具'
+});
+
+app.addSlide({
+    title: '功能特性',
+    content: '• 零依赖\n• 纯前端\n• 开箱即用\n• 自动保存'
+});
+
+// 进入演示模式
+app.present();</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🎯 幻灯片管理</h2>
+            <div class="code-block">
+                <pre><code>// 添加幻灯片
+const slide = app.addSlide({
+    title: '新幻灯片',
+    content: '幻灯片内容'
+});
+
+// 更新幻灯片
+app.updateSlide(0, {
+    title: '更新后的标题',
+    content: '更新后的内容'
+});
+
+// 删除幻灯片
+app.deleteSlide(0);
+
+// 移动幻灯片
+app.moveSlide(0, 2);
+
+// 切换幻灯片
+app.switchToSlide(1);
+
+// 获取当前幻灯片
+const currentSlide = app.getCurrentSlide();
+console.log(currentSlide.title);</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🎨 主题管理</h2>
+            <div class="code-block">
+                <pre><code>// 设置主题
+app.setTheme('dark');
+
+// 获取当前主题
+const theme = app.getTheme();
+console.log(theme); // 'dark'
+
+// 切换主题
+app.toggleTheme(); // 切换到 light
+
+// 监听主题变化
+app.on('theme:change', (newTheme) => {
+    console.log('主题已切换到:', newTheme);
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🎬 演示模式</h2>
+            <div class="code-block">
+                <pre><code>// 进入演示模式
+app.present(0); // 从第一张幻灯片开始
+
+// 退出演示模式
+app.exit();
+
+// 监听演示事件
+app.on('present:start', (startIndex) => {
+    console.log('演示开始，从第', startIndex, '张幻灯片');
+});
+
+app.on('present:end', () => {
+    console.log('演示结束');
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>💾 数据持久化</h2>
+            <div class="code-block">
+                <pre><code>// 手动保存
+await app.save();
+
+// 加载保存的数据
+await app.load();
+
+// 导出数据
+const jsonData = await app.export('json');
+const base64Data = await app.export('base64');
+
+// 导入数据
+await app.import(jsonData, 'json');
+await app.import(base64Data, 'base64');
+
+// 获取分享链接
+const shareUrl = app.getShareUrl();
+console.log('分享链接:', shareUrl);</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>↩️ 历史记录</h2>
+            <div class="code-block">
+                <pre><code>// 撤销操作
+app.undo();
+
+// 重做操作
+app.redo();
+
+// 检查是否可以撤销/重做
+if (app.canUndo()) {
+    app.undo();
+}
+
+if (app.canRedo()) {
+    app.redo();
+}
+
+// 监听历史事件
+app.on('undo', (state) => {
+    console.log('已撤销', state);
+});
+
+app.on('redo', (state) => {
+    console.log('已重做', state);
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>📡 事件系统</h2>
+            <div class="code-block">
+                <pre><code>// 监听幻灯片变化
+app.on('slide:change', (index, slide) => {
+    console.log('切换到幻灯片', index, ':', slide.title);
+});
+
+// 监听幻灯片添加
+app.on('slide:add', (slide, index) => {
+    console.log('添加幻灯片', index, ':', slide.title);
+});
+
+// 监听幻灯片删除
+app.on('slide:delete', (index) => {
+    console.log('删除幻灯片', index);
+});
+
+// 监听保存事件
+app.on('save', (data) => {
+    console.log('数据已保存', data);
+});
+
+// 监听加载事件
+app.on('load', (data) => {
+    console.log('数据已加载', data);
+});
+
+// 监听错误事件
+app.on('error', (error) => {
+    console.error('发生错误:', error);
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🎯 完整示例</h2>
+            <div class="code-block">
+                <pre><code>// 创建应用
+const app = new HTMLPPT({
+    theme: 'light',
+    autoSave: true
+});
+
+// 等待初始化完成
+app.on('ready', () => {
+    console.log('应用已就绪');
+    
+    // 添加幻灯片
+    app.addSlide({
+        title: '欢迎使用 HTML PPT',
+        content: '这是一个零依赖的演示文稿制作工具'
+    });
+    
+    app.addSlide({
+        title: '功能特性',
+        content: '• 零依赖\n• 纯前端\n• 开箱即用'
+    });
+    
+    // 监听事件
+    app.on('slide:change', (index, slide) => {
+        console.log('当前幻灯片:', slide.title);
+    });
+    
+    // 开始演示
+    setTimeout(() => {
+        app.present();
+    }, 1000);
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🔗 相关链接</h2>
+            <ul>
+                <li><a href="../index.html">返回主页</a></li>
+                <li><a href="https://github.com/yourname/htmlppt">GitHub 仓库</a></li>
+                <li><a href="../docs/api.html">API 文档</a></li>
+                <li><a href="../docs/user-guide.html">用户指南</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        import HTMLPPT from '../js/main.js';
+
+        // 创建应用实例
+        const app = new HTMLPPT({
+            theme: 'light',
+            autoSave: true
+        });
+
+        // 添加示例幻灯片
+        app.on('ready', () => {
+            console.log('HTML PPT 示例应用已就绪');
+            
+            // 添加幻灯片
+            app.addSlide({
+                title: '欢迎使用 HTML PPT',
+                content: '这是一个零依赖的演示文稿制作工具'
+            });
+
+            app.addSlide({
+                title: '功能特性',
+                content: '• 零依赖\n• 纯前端\n• 开箱即用\n• 自动保存'
+            });
+
+            app.addSlide({
+                title: '开始使用',
+                content: '查看上方的代码示例，开始使用 HTML PPT'
+            });
+
+            console.log('已添加 3 张示例幻灯片');
+        });
+
+        // 监听事件
+        app.on('slide:change', (index, slide) => {
+            console.log('切换到幻灯片:', slide.title);
+        });
+
+        // 将 app 暴露到全局，方便控制台调试
+        window.app = app;
+    </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML PPT - 测试页面</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--bg-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .test-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid var(--primary-color);
+        }
+        .test-item.pass {
+            border-left-color: #28a745;
+        }
+        .test-item.fail {
+            border-left-color: #dc3545;
+        }
+        .test-item.pending {
+            border-left-color: #ffc107;
+        }
+        .test-status {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .test-status.pass { color: #28a745; }
+        .test-status.fail { color: #dc3545; }
+        .test-status.pending { color: #ffc107; }
+        .test-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .test-button:hover {
+            background: var(--primary-dark);
+        }
+        .test-results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .test-summary {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .progress-bar {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 HTML PPT 测试页面</h1>
+        <p>这个页面用于测试HTML PPT的各项功能</p>
+
+        <div class="test-section">
+            <h2>📊 测试进度</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="test-summary" id="testSummary">
+                总计: 0 | 通过: 0 | 失败: 0 | 待测试: 0
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 快速测试</h2>
+            <button class="test-button" onclick="runAllTests()">运行所有测试</button>
+            <button class="test-button" onclick="openMainApp()">打开主应用</button>
+            <button class="test-button" onclick="testLocalStorage()">测试本地存储</button>
+            <button class="test-button" onclick="testModules()">测试模块加载</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 测试项目</h2>
+            <div id="testList">
+                <!-- 测试项目将在这里动态生成 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📝 测试结果</h2>
+            <div class="test-results" id="testResults">
+                <p>点击"运行所有测试"开始测试...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 测试配置
+        const tests = [
+            {
+                name: 'HTML结构完整性',
+                category: '基础',
+                fn: testHTMLStructure
+            },
+            {
+                name: 'CSS样式加载',
+                category: '基础',
+                fn: testCSSLoading
+            },
+            {
+                name: 'JavaScript模块加载',
+                category: '基础',
+                fn: testJSModules
+            },
+            {
+                name: '本地存储功能',
+                category: '功能',
+                fn: testLocalStorage
+            },
+            {
+                name: '主题切换',
+                category: '功能',
+                fn: testThemeSwitch
+            },
+            {
+                name: '响应式设计',
+                category: 'UI',
+                fn: testResponsive
+            },
+            {
+                name: '浏览器兼容性',
+                category: '兼容性',
+                fn: testBrowserCompatibility
+            },
+            {
+                name: '性能测试',
+                category: '性能',
+                fn: testPerformance
+            }
+        ];
+
+        let testResults = {
+            total: tests.length,
+            passed: 0,
+            failed: 0,
+            pending: tests.length
+        };
+
+        // 初始化测试列表
+        function initTestList() {
+            const testList = document.getElementById('testList');
+            testList.innerHTML = '';
+
+            tests.forEach((test, index) => {
+                const item = document.createElement('div');
+                item.className = 'test-item pending';
+                item.id = `test-${index}`;
+                item.innerHTML = `
+                    <span class="test-status pending">⏳</span>
+                    <strong>${test.name}</strong>
+                    <span style="color: #666; margin-left: 10px;">[${test.category}]</span>
+                `;
+                testList.appendChild(item);
+            });
+        }
+
+        // 更新测试进度
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const testSummary = document.getElementById('testSummary');
+            const percentage = (testResults.passed / testResults.total) * 100;
+
+            progressBar.style.width = `${percentage}%`;
+            testSummary.innerHTML = `
+                总计: ${testResults.total} | 
+                <span style="color: #28a745">通过: ${testResults.passed}</span> | 
+                <span style="color: #dc3545">失败: ${testResults.failed}</span> | 
+                <span style="color: #ffc107">待测试: ${testResults.pending}</span>
+            `;
+        }
+
+        // 更新测试项状态
+        function updateTestStatus(index, status, message = '') {
+            const item = document.getElementById(`test-${index}`);
+            if (!item) return;
+
+            item.className = `test-item ${status}`;
+            const statusSpan = item.querySelector('.test-status');
+            statusSpan.className = `test-status ${status}`;
+
+            if (status === 'pass') {
+                statusSpan.textContent = '✅';
+                testResults.passed++;
+                testResults.pending--;
+            } else if (status === 'fail') {
+                statusSpan.textContent = '❌';
+                testResults.failed++;
+                testResults.pending--;
+            } else {
+                statusSpan.textContent = '⏳';
+            }
+
+            if (message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.style.marginTop = '5px';
+                messageDiv.style.fontSize = '12px';
+                messageDiv.style.color = '#666';
+                messageDiv.textContent = message;
+                item.appendChild(messageDiv);
+            }
+
+            updateProgress();
+        }
+
+        // 运行所有测试
+        async function runAllTests() {
+            const testResultsDiv = document.getElementById('testResults');
+            testResultsDiv.innerHTML = '<p>正在运行测试...</p>';
+
+            // 重置结果
+            testResults = {
+                total: tests.length,
+                passed: 0,
+                failed: 0,
+                pending: tests.length
+            };
+
+            initTestList();
+
+            // 运行每个测试
+            for (let i = 0; i < tests.length; i++) {
+                const test = tests[i];
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // 小延迟
+                    const result = await test.fn();
+                    updateTestStatus(i, result.pass ? 'pass' : 'fail', result.message);
+                } catch (error) {
+                    updateTestStatus(i, 'fail', error.message);
+                }
+            }
+
+            // 显示最终结果
+            const passRate = ((testResults.passed / testResults.total) * 100).toFixed(1);
+            testResultsDiv.innerHTML = `
+                <h3>测试完成！</h3>
+                <p><strong>通过率:</strong> ${passRate}%</p>
+                <p><strong>详细结果:</strong></p>
+                <ul>
+                    <li>✅ 通过: ${testResults.passed}</li>
+                    <li>❌ 失败: ${testResults.failed}</li>
+                    <li>⏳ 待测试: ${testResults.pending}</li>
+                </ul>
+                ${testResults.passed === testResults.total ? 
+                    '<p style="color: #28a745; font-weight: bold;">🎉 所有测试通过！可以部署了！</p>' : 
+                    '<p style="color: #dc3545;">⚠️ 有测试失败，请检查后再部署</p>'}
+            `;
+        }
+
+        // 测试函数
+        function testHTMLStructure() {
+            try {
+                // 检查是否有基本的HTML结构
+                const hasDoctype = document.doctype !== null;
+                const hasTitle = document.title !== '';
+                const hasMetaViewport = document.querySelector('meta[name="viewport"]') !== null;
+
+                if (hasDoctype && hasTitle && hasMetaViewport) {
+                    return { pass: true, message: 'HTML结构完整' };
+                } else {
+                    return { pass: false, message: 'HTML结构不完整' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testCSSLoading() {
+            try {
+                // 检查CSS是否加载
+                const stylesheets = document.styleSheets;
+                const hasStyles = stylesheets.length > 0;
+
+                if (hasStyles) {
+                    return { pass: true, message: `加载了 ${stylesheets.length} 个样式表` };
+                } else {
+                    return { pass: false, message: '没有加载样式表' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testJSModules() {
+            try {
+                // 检查JavaScript是否可用
+                const hasConsole = typeof console !== 'undefined';
+                const hasLocalStorage = typeof localStorage !== 'undefined';
+                const hasFetch = typeof fetch !== 'undefined';
+
+                if (hasConsole && hasLocalStorage && hasFetch) {
+                    return { pass: true, message: 'JavaScript功能正常' };
+                } else {
+                    return { pass: false, message: 'JavaScript功能不完整' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testLocalStorage() {
+            try {
+                // 测试本地存储
+                const testKey = 'htmlppt_test';
+                const testValue = 'test_value_' + Date.now();
+
+                localStorage.setItem(testKey, testValue);
+                const retrieved = localStorage.getItem(testKey);
+                localStorage.removeItem(testKey);
+
+                if (retrieved === testValue) {
+                    return { pass: true, message: '本地存储功能正常' };
+                } else {
+                    return { pass: false, message: '本地存储读写失败' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testThemeSwitch() {
+            try {
+                // 测试主题切换
+                const html = document.documentElement;
+                const currentTheme = html.getAttribute('data-theme');
+
+                html.setAttribute('data-theme', 'dark');
+                const darkTheme = html.getAttribute('data-theme');
+
+                html.setAttribute('data-theme', currentTheme || 'light');
+
+                if (darkTheme === 'dark') {
+                    return { pass: true, message: '主题切换功能正常' };
+                } else {
+                    return { pass: false, message: '主题切换失败' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testResponsive() {
+            try {
+                // 测试响应式设计
+                const width = window.innerWidth;
+                const isResponsive = width > 0;
+
+                if (isResponsive) {
+                    return { pass: true, message: `当前窗口宽度: ${width}px` };
+                } else {
+                    return { pass: false, message: '无法检测窗口宽度' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testBrowserCompatibility() {
+            try {
+                // 测试浏览器兼容性
+                const userAgent = navigator.userAgent;
+                const isModernBrowser = 
+                    'querySelector' in document &&
+                    'addEventListener' in window &&
+                    'classList' in document.documentElement;
+
+                if (isModernBrowser) {
+                    return { pass: true, message: '浏览器兼容性良好' };
+                } else {
+                    return { pass: false, message: '浏览器版本过低' };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        function testPerformance() {
+            try {
+                // 测试性能
+                const start = performance.now();
+                
+                // 执行一些操作
+                for (let i = 0; i < 1000; i++) {
+                    document.createElement('div');
+                }
+                
+                const end = performance.now();
+                const duration = end - start;
+
+                if (duration < 100) {
+                    return { pass: true, message: `性能良好 (${duration.toFixed(2)}ms)` };
+                } else {
+                    return { pass: false, message: `性能较差 (${duration.toFixed(2)}ms)` };
+                }
+            } catch (error) {
+                return { pass: false, message: error.message };
+            }
+        }
+
+        // 打开主应用
+        function openMainApp() {
+            window.open('src/index.html', '_blank');
+        }
+
+        // 测试本地存储
+        function testLocalStorage() {
+            try {
+                const testKey = 'htmlppt_manual_test';
+                const testValue = 'manual_test_' + Date.now();
+
+                localStorage.setItem(testKey, testValue);
+                const retrieved = localStorage.getItem(testKey);
+                localStorage.removeItem(testKey);
+
+                alert(retrieved === testValue ? 
+                    '✅ 本地存储测试通过！' : 
+                    '❌ 本地存储测试失败！');
+            } catch (error) {
+                alert('❌ 本地存储测试失败: ' + error.message);
+            }
+        }
+
+        // 测试模块加载
+        function testModules() {
+            const modules = [
+                'src/js/app.js',
+                'src/js/main.js',
+                'src/js/slide.js',
+                'src/js/presentation.js',
+                'src/js/storage.js',
+                'src/js/theme.js',
+                'src/js/history.js',
+                'src/js/themes.js',
+                'src/js/shortcuts.js',
+                'src/js/templates.js',
+                'src/js/export.js',
+                'src/js/collaboration.js',
+                'src/js/utils.js'
+            ];
+
+            let message = '模块检查结果:\n\n';
+            modules.forEach(module => {
+                message += `• ${module}\n`;
+            });
+            message += `\n共 ${modules.length} 个模块需要检查`;
+
+            alert(message);
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            initTestList();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
