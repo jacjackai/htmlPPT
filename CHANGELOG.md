@@ -89,7 +89,7 @@
 
 ---
 
-[Unreleased]: https://github.com/yourname/htmlppt/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourname/htmlppt/releases/tag/v1.0.0
-[0.9.0]: https://github.com/yourname/htmlppt/releases/tag/v0.9.0
-[0.1.0]: https://github.com/yourname/htmlppt/releases/tag/v0.1.0
+[Unreleased]: https://github.com/jacjackai/htmlppt/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/jacjackai/htmlppt/releases/tag/v1.0.0
+[0.9.0]: https://github.com/jacjackai/htmlppt/releases/tag/v0.9.0
+[0.1.0]: https://github.com/jacjackai/htmlppt/releases/tag/v0.1.0

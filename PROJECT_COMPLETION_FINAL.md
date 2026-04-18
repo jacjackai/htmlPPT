@@ -118,7 +118,7 @@ htmlppt/
 ### 克隆项目
 
 ```bash
-git clone https://github.com/yourname/htmlppt.git
+git clone https://github.com/jacjackai/htmlppt.git
 cd htmlppt
 ```
 
@@ -329,9 +329,9 @@ cd /Users/jack/Project/htmlPPT
 
 ## 📞 联系方式
 
-- **GitHub**: https://github.com/yourname/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlppt
 - **NPM**: https://www.npmjs.com/package/htmlppt
-- **演示**: https://yourname.github.io/htmlppt
+- **演示**: https://jacjackai.github.io/htmlppt
 
 ---
 

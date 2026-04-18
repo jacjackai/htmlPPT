@@ -42,8 +42,8 @@ cd /Users/jack/Project/htmlPPT
 ```bash
 cd /Users/jack/Project/htmlPPT
 
-# 添加远程仓库（替换yourname为你的GitHub用户名）
-git remote add origin https://github.com/yourname/htmlppt.git
+# 添加远程仓库（替换jacjackai为你的GitHub用户名）
+git remote add origin https://github.com/jacjackai/htmlppt.git
 
 # 验证
 git remote -v
@@ -76,7 +76,7 @@ git push origin v1.0.0
 
 #### 5. 创建Release
 
-访问：https://github.com/yourname/htmlppt/releases/new
+访问：https://github.com/jacjackai/htmlppt/releases/new
 
 - 选择标签：`v1.0.0`
 - 填写Release标题：`HTML PPT v1.0.0`
@@ -85,7 +85,7 @@ git push origin v1.0.0
 
 #### 6. 配置GitHub Pages
 
-访问：https://github.com/yourname/htmlppt/settings/pages
+访问：https://github.com/jacjackai/htmlppt/settings/pages
 
 配置：
 - Source: `Deploy from a branch`
@@ -96,7 +96,7 @@ git push origin v1.0.0
 
 #### 7. 启用GitHub Actions
 
-访问：https://github.com/yourname/htmlppt/settings/actions
+访问：https://github.com/jacjackai/htmlppt/settings/actions
 
 选择：`Allow all actions and reusable workflows`
 
@@ -104,13 +104,13 @@ git push origin v1.0.0
 
 #### 8. 添加项目信息
 
-访问：https://github.com/yourname/htmlppt
+访问：https://github.com/jacjackai/htmlppt
 
 点击 "About" 右侧的齿轮
 
 填写：
 - Description: `HTML PPT - 纯前端演示文稿制作工具`
-- Website: `https://yourname.github.io/htmlppt`
+- Website: `https://jacjackai.github.io/htmlppt`
 - Topics: `ppt, presentation, html, css, javascript, web, frontend, slides, demo, open-source`
 
 点击 "Save"
@@ -121,12 +121,12 @@ git push origin v1.0.0
 
 部署完成后，请验证：
 
-- [ ] 仓库已创建：https://github.com/yourname/htmlppt
+- [ ] 仓库已创建：https://github.com/jacjackai/htmlppt
 - [ ] 代码已推送：检查所有文件
-- [ ] Tag已创建：https://github.com/yourname/htmlppt/tags
-- [ ] Release已发布：https://github.com/yourname/htmlppt/releases
-- [ ] GitHub Pages已部署：https://yourname.github.io/htmlppt
-- [ ] GitHub Actions已启用：https://github.com/yourname/htmlppt/actions
+- [ ] Tag已创建：https://github.com/jacjackai/htmlppt/tags
+- [ ] Release已发布：https://github.com/jacjackai/htmlppt/releases
+- [ ] GitHub Pages已部署：https://jacjackai.github.io/htmlppt
+- [ ] GitHub Actions已启用：https://github.com/jacjackai/htmlppt/actions
 - [ ] 项目信息已完善：检查About部分
 
 ---
@@ -209,7 +209,7 @@ git push origin v1.0.0
 
 ```bash
 # 使用Personal Access Token
-git push https://yourname:YOUR_TOKEN@github.com/yourname/htmlppt.git main
+git push https://jacjackai:YOUR_TOKEN@github.com/jacjackai/htmlppt.git main
 ```
 
 ### Q: GitHub Pages部署失败
@@ -268,8 +268,8 @@ git push -f origin main
 
 - 📖 [GitHub文档](https://docs.github.com)
 - 📖 [项目文档](docs/)
-- 🐛 [提交Issue](https://github.com/yourname/htmlppt/issues)
-- 💬 [GitHub Discussions](https://github.com/yourname/htmlppt/discussions)
+- 🐛 [提交Issue](https://github.com/jacjackai/htmlppt/issues)
+- 💬 [GitHub Discussions](https://github.com/jacjackai/htmlppt/discussions)
 
 ---
 

@@ -8,8 +8,8 @@
 
 如果你发现了 bug 或有功能建议，请：
 
-1. 检查 [Issues](https://github.com/yourname/htmlppt/issues) 确保问题未被报告
-2. 使用合适的 [Issue 模板](https://github.com/yourname/htmlppt/issues/new/choose)
+1. 检查 [Issues](https://github.com/jacjackai/htmlppt/issues) 确保问题未被报告
+2. 使用合适的 [Issue 模板](https://github.com/jacjackai/htmlppt/issues/new/choose)
 3. 提供详细的信息：
    - 问题描述
    - 复现步骤
@@ -25,7 +25,7 @@
 1. Fork 项目仓库
 2. 克隆你的 fork：
    ```bash
-   git clone https://github.com/yourname/htmlppt.git
+   git clone https://github.com/jacjackai/htmlppt.git
    cd htmlppt
    ```
 
@@ -214,4 +214,4 @@ npm test -- --watch
 
 ---
 
-有任何问题？请随时通过 [Issues](https://github.com/yourname/htmlppt/issues) 联系我们。
+有任何问题？请随时通过 [Issues](https://github.com/jacjackai/htmlppt/issues) 联系我们。

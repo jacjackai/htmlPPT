@@ -8,7 +8,7 @@
 
 如果你发现了 bug 或有功能建议：
 
-1. 先检查 [Issues](https://github.com/yourname/htmlppt/issues) 确认问题是否已被报告
+1. 先检查 [Issues](https://github.com/jacjackai/htmlppt/issues) 确认问题是否已被报告
 2. 如果没有，创建一个新的 Issue
 3. 使用合适的模板填写详细信息
 4. 提供重现步骤、截图或代码示例
@@ -243,17 +243,17 @@ npm run test:coverage # 生成覆盖率报告
 
 感谢所有贡献者！
 
-<a href="https://github.com/yourname/htmlppt/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=yourname/htmlppt" />
+<a href="https://github.com/jacjackai/htmlppt/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jacjackai/htmlppt" />
 </a>
 
 ## 📧 联系方式
 
 如果你有任何问题：
 
-- 创建 [Issue](https://github.com/yourname/htmlppt/issues)
+- 创建 [Issue](https://github.com/jacjackai/htmlppt/issues)
 - 发送邮件至 your.email@example.com
-- 在 [Discussions](https://github.com/yourname/htmlppt/discussions) 中讨论
+- 在 [Discussions](https://github.com/jacjackai/htmlppt/discussions) 中讨论
 
 ## 📜 行为准则
 

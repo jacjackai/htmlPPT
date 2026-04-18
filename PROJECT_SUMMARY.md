@@ -292,8 +292,8 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 - **作者**: Your Name
 - **邮箱**: your.email@example.com
-- **GitHub**: https://github.com/yourname/htmlppt
-- **网站**: https://yourname.github.io/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlppt
+- **网站**: https://jacjackai.github.io/htmlppt
 
 ---
 

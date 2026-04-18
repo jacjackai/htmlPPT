@@ -131,7 +131,7 @@ git push origin v1.0.0
 #### 3.1 推送到GitHub
 ```bash
 # 添加远程仓库（如果还没有）
-git remote add origin https://github.com/yourname/htmlppt.git
+git remote add origin https://github.com/jacjackai/htmlppt.git
 
 # 推送所有分支
 git push -u origin main
@@ -141,7 +141,7 @@ git push --tags
 ```
 
 #### 3.2 创建GitHub Release
-1. 访问 https://github.com/yourname/htmlppt/releases
+1. 访问 https://github.com/jacjackai/htmlppt/releases
 2. 点击 "Create a new release"
 3. 填写发布信息：
    - **Tag version**: v1.0.0
@@ -150,7 +150,7 @@ git push --tags
 4. 点击 "Publish release"
 
 #### 3.3 启用GitHub Pages
-1. 访问 https://github.com/yourname/htmlppt/settings/pages
+1. 访问 https://github.com/jacjackai/htmlppt/settings/pages
 2. **Source**: 选择 "GitHub Actions"
 3. 等待部署完成
 
@@ -274,17 +274,17 @@ npm deprecate htmlppt@1.0.0 "请使用最新版本"
 
 ## 📦 下载
 
-- [GitHub Release](https://github.com/yourname/htmlppt/releases/tag/v{VERSION})
+- [GitHub Release](https://github.com/jacjackai/htmlppt/releases/tag/v{VERSION})
 - [NPM](https://www.npmjs.com/package/htmlppt)
 
 ## 📖 文档
 
-- [用户指南](https://yourname.github.io/htmlppt/docs/user-guide.html)
-- [API文档](https://yourname.github.io/htmlppt/docs/api.html)
+- [用户指南](https://jacjackai.github.io/htmlppt/docs/user-guide.html)
+- [API文档](https://jacjackai.github.io/htmlppt/docs/api.html)
 
 ## 🤝 贡献
 
-欢迎贡献！请查看[贡献指南](https://github.com/yourname/htmlppt/blob/main/CONTRIBUTING.md)
+欢迎贡献！请查看[贡献指南](https://github.com/jacjackai/htmlppt/blob/main/CONTRIBUTING.md)
 
 ## 📄 许可证
 

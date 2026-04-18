@@ -37,12 +37,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourname/htmlppt.git"
+    "url": "https://github.com/jacjackai/htmlppt.git"
   },
   "bugs": {
-    "url": "https://github.com/yourname/htmlppt/issues"
+    "url": "https://github.com/jacjackai/htmlppt/issues"
   },
-  "homepage": "https://github.com/yourname/htmlppt#readme",
+  "homepage": "https://github.com/jacjackai/htmlppt#readme",
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
