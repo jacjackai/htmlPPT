@@ -39,7 +39,7 @@ HTML PPT是一个零依赖、纯前端、开箱即用的演示文稿制作工具
 
 ```bash
 # 克隆项目
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 
 # 直接打开
 open src/index.html
@@ -47,7 +47,7 @@ open src/index.html
 
 ## 项目地址
 
-🔗 [GitHub: https://github.com/jacjackai/htmlppt](https://github.com/jacjackai/htmlppt)
+🔗 [GitHub: https://github.com/jacjackai/htmlPPT](https://github.com/jacjackai/htmlPPT)
 
 ## 总结
 
@@ -147,7 +147,7 @@ const data = await app.export('json');
 
 ## 项目地址
 
-🔗 [GitHub: https://github.com/jacjackai/htmlppt](https://github.com/jacjackai/htmlppt)
+🔗 [GitHub: https://github.com/jacjackai/htmlPPT](https://github.com/jacjackai/htmlPPT)
 
 ## 总结
 
@@ -184,7 +184,7 @@ MIT许可证，完全免费使用。
 ## 如何使用？
 
 ```bash
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 cd htmlppt
 open src/index.html
 ```
@@ -193,7 +193,7 @@ open src/index.html
 
 ## 项目地址
 
-https://github.com/jacjackai/htmlppt
+https://github.com/jacjackai/htmlPPT
 
 希望这个工具对你有帮助！
 ```
@@ -213,7 +213,7 @@ https://github.com/jacjackai/htmlppt
 • 一键分享 - URL参数
 • 响应式 - 完美适配
 
-🔗 https://github.com/jacjackai/htmlppt
+🔗 https://github.com/jacjackai/htmlPPT
 
 #JavaScript #Frontend #OpenSource #WebDev
 ```
@@ -251,7 +251,7 @@ https://github.com/jacjackai/htmlppt
 
 ## 项目地址
 
-https://github.com/jacjackai/htmlppt
+https://github.com/jacjackai/htmlPPT
 
 如果你觉得这个项目有用，请给个Star⭐️
 
@@ -292,14 +292,14 @@ It's a lightweight presentation tool built with pure HTML/CSS/JavaScript.
 ## Quick Start
 
 ```bash
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 cd htmlppt
 open src/index.html
 ```
 
 ## Project Link
 
-https://github.com/jacjackai/htmlppt
+https://github.com/jacjackai/htmlPPT
 
 I'd love to hear your feedback!
 
@@ -332,11 +332,11 @@ I'd love to hear your feedback!
 
 【快速开始】
 ```bash
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 ```
 
 【项目地址】
-https://github.com/jacjackai/htmlppt
+https://github.com/jacjackai/htmlPPT
 
 【结尾】
 如果觉得有用，请给个Star！

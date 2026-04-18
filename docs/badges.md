@@ -5,24 +5,24 @@
 ### 状态徽章
 ```markdown
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/issues)
-[![GitHub release](https://img.shields.io/github/release/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/releases)
+[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/issues)
+[![GitHub release](https://img.shields.io/github/release/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/releases)
 ```
 
 ### 构建徽章
 ```markdown
-[![Build Status](https://github.com/jacjackai/htmlppt/workflows/CI/badge.svg)](https://github.com/jacjackai/htmlppt/actions)
-[![Deploy Status](https://github.com/jacjackai/htmlppt/workflows/Deploy/badge.svg)](https://github.com/jacjackai/htmlppt/actions)
-[![CodeQL](https://github.com/jacjackai/htmlppt/actions/workflows/codeql.yml/badge.svg)](https://github.com/jacjackai/htmlppt/actions/workflows/codeql.yml)
+[![Build Status](https://github.com/jacjackai/htmlPPT/workflows/CI/badge.svg)](https://github.com/jacjackai/htmlPPT/actions)
+[![Deploy Status](https://github.com/jacjackai/htmlPPT/workflows/Deploy/badge.svg)](https://github.com/jacjackai/htmlPPT/actions)
+[![CodeQL](https://github.com/jacjackai/htmlPPT/actions/workflows/codeql.yml/badge.svg)](https://github.com/jacjackai/htmlPPT/actions/workflows/codeql.yml)
 ```
 
 ### 质量徽章
 ```markdown
-[![codecov](https://codecov.io/gh/jacjackai/htmlppt/branch/main/graph/badge.svg)](https://codecov.io/gh/jacjackai/htmlppt)
-[![Code Quality](https://img.shields.io/scrutinizer/g/jacjackai/htmlppt.svg)](https://scrutinizer-ci.com/g/jacjackai/htmlppt/)
-[![Maintainability](https://api.codeclimate.com/v1/badges/jacjackai/htmlppt/maintainability)](https://codeclimate.com/github/jacjackai/htmlppt/maintainability)
+[![codecov](https://codecov.io/gh/jacjackai/htmlPPT/branch/main/graph/badge.svg)](https://codecov.io/gh/jacjackai/htmlPPT)
+[![Code Quality](https://img.shields.io/scrutinizer/g/jacjackai/htmlPPT.svg)](https://scrutinizer-ci.com/g/jacjackai/htmlPPT/)
+[![Maintainability](https://api.codeclimate.com/v1/badges/jacjackai/htmlPPT/maintainability)](https://codeclimate.com/github/jacjackai/htmlPPT/maintainability)
 ```
 
 ### 依赖徽章
@@ -30,28 +30,28 @@
 [![npm](https://img.shields.io/npm/v/htmlppt)](https://www.npmjs.com/package/htmlppt)
 [![Downloads](https://img.shields.io/npm/dm/htmlppt)](https://www.npmjs.com/package/htmlppt)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/htmlppt)](https://bundlephobia.com/result?p=htmlppt)
-[![Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlppt)
+[![Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ### 社区徽章
 ```markdown
-[![Contributors](https://img.shields.io/github/contributors/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/graphs/contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![Chat](https://img.shields.io/badge/chat-on%20discord-blue)](https://discord.gg/jacjackai)
 ```
 
 ### 平台徽章
 ```markdown
-[![Platform](https://img.shields.io/badge/platform-web-lightgrey)](https://github.com/jacjackai/htmlppt)
-[![Browser](https://img.shields.io/badge/browser-chrome%20%7C%20firefox%20%7C%20safari%20%7C%20edge-informational)](https://github.com/jacjackai/htmlppt)
-[![Mobile](https://img.shields.io/badge/mobile-responsive-success)](https://github.com/jacjackai/htmlppt)
+[![Platform](https://img.shields.io/badge/platform-web-lightgrey)](https://github.com/jacjackai/htmlPPT)
+[![Browser](https://img.shields.io/badge/browser-chrome%20%7C%20firefox%20%7C%20safari%20%7C%20edge-informational)](https://github.com/jacjackai/htmlPPT)
+[![Mobile](https://img.shields.io/badge/mobile-responsive-success)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ### 版本徽章
 ```markdown
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/jacjackai/htmlppt/releases/tag/v1.0.0)
-[![Node](https://img.shields.io/node/v-htmlppt)](https://github.com/jacjackai/htmlppt)
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)](https://github.com/jacjackai/htmlppt)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/jacjackai/htmlPPT/releases/tag/v1.0.0)
+[![Node](https://img.shields.io/node/v-htmlppt)](https://github.com/jacjackai/htmlPPT)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ## Shields.io 自定义徽章
@@ -63,10 +63,10 @@ https://img.shields.io/badge/<LABEL>-<MESSAGE>-<COLOR>
 
 ### 示例
 ```markdown
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlppt)
-[![Lightweight](https://img.shields.io/badge/size-<50KB-green)](https://github.com/jacjackai/htmlppt)
-[![Fast](https://img.shields.io/badge/load_time-<1s-brightgreen)](https://github.com/jacjackai/htmlppt)
-[![Open Source](https://img.shields.io/badge/open_source-yes-blue)](https://github.com/jacjackai/htmlppt)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlPPT)
+[![Lightweight](https://img.shields.io/badge/size-<50KB-green)](https://github.com/jacjackai/htmlPPT)
+[![Fast](https://img.shields.io/badge/load_time-<1s-brightgreen)](https://github.com/jacjackai/htmlPPT)
+[![Open Source](https://img.shields.io/badge/open_source-yes-blue)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ## 颜色参考
@@ -92,14 +92,14 @@ https://img.shields.io/badge/<LABEL>-<MESSAGE>-<COLOR>
 # HTML PPT
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/network/members)
-[![Build Status](https://github.com/jacjackai/htmlppt/workflows/CI/badge.svg)](https://github.com/jacjackai/htmlppt/actions)
-[![codecov](https://codecov.io/gh/jacjackai/htmlppt/branch/main/graph/badge.svg)](https://codecov.io/gh/jacjackai/htmlppt)
+[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/network/members)
+[![Build Status](https://github.com/jacjackai/htmlPPT/workflows/CI/badge.svg)](https://github.com/jacjackai/htmlPPT/actions)
+[![codecov](https://codecov.io/gh/jacjackai/htmlPPT/branch/main/graph/badge.svg)](https://codecov.io/gh/jacjackai/htmlPPT)
 [![npm](https://img.shields.io/npm/v/htmlppt)](https://www.npmjs.com/package/htmlppt)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/htmlppt)](https://bundlephobia.com/result?p=htmlppt)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlppt)
-[![Lightweight](https://img.shields.io/badge/size-<50KB-green)](https://github.com/jacjackai/htmlppt)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlPPT)
+[![Lightweight](https://img.shields.io/badge/size-<50KB-green)](https://github.com/jacjackai/htmlPPT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 > 零依赖、纯前端、开箱即用的演示文稿制作工具
@@ -109,8 +109,8 @@ https://img.shields.io/badge/<LABEL>-<MESSAGE>-<COLOR>
 
 ### GitHub 统计
 ```markdown
-[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlppt?style=social)](https://github.com/jacjackai/htmlppt/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlppt?style=social)](https://github.com/jacjackai/htmlppt/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlPPT?style=social)](https://github.com/jacjackai/htmlPPT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlPPT?style=social)](https://github.com/jacjackai/htmlPPT/network/members)
 [![GitHub followers](https://img.shields.io/github/followers/jacjackai?style=social)](https://github.com/jacjackai)
 ```
 
@@ -124,26 +124,26 @@ https://img.shields.io/badge/<LABEL>-<MESSAGE>-<COLOR>
 
 ### 代码质量
 ```markdown
-[![Lines of Code](https://tokei.rs/b1/github/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/jacjackai/htmlppt)](https://codeclimate.com/github/jacjackai/htmlppt)
-[![Technical Debt](https://img.shields.io/codeclimate/technical-debt/jacjackai/htmlppt)](https://codeclimate.com/github/jacjackai/htmlppt)
+[![Lines of Code](https://tokei.rs/b1/github/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/jacjackai/htmlPPT)](https://codeclimate.com/github/jacjackai/htmlPPT)
+[![Technical Debt](https://img.shields.io/codeclimate/technical-debt/jacjackai/htmlPPT)](https://codeclimate.com/github/jacjackai/htmlPPT)
 ```
 
 ## 社交媒体徽章
 
 ### Twitter
 ```markdown
-[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fjacjackai%2Fhtmlppt)](https://twitter.com/intent/tweet?text=Check%20out%20HTML%20PPT%20-%20a%20zero-dependency%20presentation%20tool&url=https://github.com/jacjackai/htmlppt)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fjacjackai%2Fhtmlppt)](https://twitter.com/intent/tweet?text=Check%20out%20HTML%20PPT%20-%20a%20zero-dependency%20presentation%20tool&url=https://github.com/jacjackai/htmlPPT)
 ```
 
 ### Facebook
 ```markdown
-[![Facebook](https://img.shields.io/badge/Share-Facebook-blue)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/jacjackai/htmlppt)
+[![Facebook](https://img.shields.io/badge/Share-Facebook-blue)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/jacjackai/htmlPPT)
 ```
 
 ### LinkedIn
 ```markdown
-[![LinkedIn](https://img.shields.io/badge/Share-LinkedIn-blue)](https://www.linkedin.com/shareArticle?mini=true&url=https://github.com/jacjackai/htmlppt)
+[![LinkedIn](https://img.shields.io/badge/Share-LinkedIn-blue)](https://www.linkedin.com/shareArticle?mini=true&url=https://github.com/jacjackai/htmlPPT)
 ```
 
 ## 其他徽章服务
@@ -151,15 +151,15 @@ https://img.shields.io/badge/<LABEL>-<MESSAGE>-<COLOR>
 ### Badgen
 ```markdown
 [![npm](https://badgen.net/npm/v/htmlppt)](https://www.npmjs.com/package/htmlppt)
-[![stars](https://badgen.net/github/stars/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt)
-[![forks](https://badgen.net/github/forks/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt)
+[![stars](https://badgen.net/github/stars/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT)
+[![forks](https://badgen.net/github/forks/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ### For The Badge
 ```markdown
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://github.com/jacjackai/htmlppt)
-[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://github.com/jacjackai/htmlppt)
-[![forthebadge](https://forthebadge.com/images/badges/uses-badges.svg)](https://github.com/jacjackai/htmlppt)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://github.com/jacjackai/htmlPPT)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://github.com/jacjackai/htmlPPT)
+[![forthebadge](https://forthebadge.com/images/badges/uses-badges.svg)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ### Visual Studio Marketplace

@@ -500,8 +500,8 @@ async function autoPresent() {
 
 - 📖 查看 [API 文档](api.md)
 - 🤝 查看 [贡献指南](CONTRIBUTING.md)
-- 🐛 提交 [Issue](https://github.com/jacjackai/htmlppt/issues)
-- 💬 加入 [讨论](https://github.com/jacjackai/htmlppt/discussions)
+- 🐛 提交 [Issue](https://github.com/jacjackai/htmlPPT/issues)
+- 💬 加入 [讨论](https://github.com/jacjackai/htmlPPT/discussions)
 
 ---
 

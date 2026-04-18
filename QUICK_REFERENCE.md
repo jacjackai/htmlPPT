@@ -206,7 +206,7 @@ npm publish
 ### 5分钟快速上手
 ```bash
 # 1. 克隆项目
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 
 # 2. 进入目录
 cd htmlppt
@@ -295,9 +295,9 @@ A: 不会，数据会自动保存到localStorage。
 
 ## 📞 联系方式
 
-- **GitHub**: https://github.com/jacjackai/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlPPT
 - **NPM**: https://www.npmjs.com/package/htmlppt
-- **演示**: https://jacjackai.github.io/htmlppt
+- **演示**: https://jacjackai.github.io/htmlPPT
 
 ## ⚠️ 重要提醒
 

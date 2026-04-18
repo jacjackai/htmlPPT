@@ -89,7 +89,7 @@ cat ~/.ssh/id_ed25519.pub
 cd /Users/jack/Project/htmlPPT
 
 # 添加远程仓库（替换jacjackai为你的GitHub用户名）
-git remote add origin https://github.com/jacjackai/htmlppt.git
+git remote add origin https://github.com/jacjackai/htmlPPT.git
 
 # 验证远程仓库
 git remote -v
@@ -149,7 +149,7 @@ git push origin v1.0.0
 
 ### 第六步：创建GitHub Release
 
-1. 访问：https://github.com/jacjackai/htmlppt/releases/new
+1. 访问：https://github.com/jacjackai/htmlPPT/releases/new
 2. 选择标签：`v1.0.0`
 3. 填写Release标题：`HTML PPT v1.0.0`
 4. 填写描述：
@@ -176,7 +176,7 @@ git push origin v1.0.0
 
 ### 克隆项目
 ```bash
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 cd htmlppt
 ```
 
@@ -224,7 +224,7 @@ open examples/demo.html
 
 ## 🌐 在线演示
 
-访问演示网站: https://jacjackai.github.io/htmlppt
+访问演示网站: https://jacjackai.github.io/htmlPPT
 
 ## 📝 更新日志
 
@@ -246,16 +246,16 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ⭐ 如果这个项目对你有帮助，请给个 Star！
 
-🐛 发现问题？请提交 [Issue](https://github.com/jacjackai/htmlppt/issues)
+🐛 发现问题？请提交 [Issue](https://github.com/jacjackai/htmlPPT/issues)
 
-💡 有好的想法？欢迎提交 [PR](https://github.com/jacjackai/htmlppt/pulls)
+💡 有好的想法？欢迎提交 [PR](https://github.com/jacjackai/htmlPPT/pulls)
 ```
 
 5. 点击 "Publish release"
 
 ### 第七步：配置GitHub Pages
 
-1. 访问：https://github.com/jacjackai/htmlppt/settings/pages
+1. 访问：https://github.com/jacjackai/htmlPPT/settings/pages
 2. 配置：
    ```
    Source: Deploy from a branch
@@ -264,11 +264,11 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
    ```
 3. 点击 "Save"
 
-等待几分钟后，访问：https://jacjackai.github.io/htmlppt
+等待几分钟后，访问：https://jacjackai.github.io/htmlPPT
 
 ### 第八步：启用GitHub Actions
 
-1. 访问：https://github.com/jacjackai/htmlppt/settings/actions
+1. 访问：https://github.com/jacjackai/htmlPPT/settings/actions
 2. 在 "Actions permissions" 中选择：
    ```
    Allow all actions and reusable workflows
@@ -277,12 +277,12 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ### 第九步：添加项目信息
 
-1. 访问：https://github.com/jacjackai/htmlppt
+1. 访问：https://github.com/jacjackai/htmlPPT
 2. 点击 "About" 右侧的齿轮
 3. 填写：
    ```
    Description: HTML PPT - 纯前端演示文稿制作工具
-   Website: https://jacjackai.github.io/htmlppt
+   Website: https://jacjackai.github.io/htmlPPT
    Topics: ppt, presentation, html, css, javascript, web, frontend, slides, demo, open-source
    ```
 4. 点击 "Save"
@@ -291,12 +291,12 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ### 检查清单
 
-- [ ] 仓库已创建：https://github.com/jacjackai/htmlppt
+- [ ] 仓库已创建：https://github.com/jacjackai/htmlPPT
 - [ ] 代码已推送：检查所有文件
-- [ ] Tag已创建：https://github.com/jacjackai/htmlppt/tags
-- [ ] Release已发布：https://github.com/jacjackai/htmlppt/releases
-- [ ] GitHub Pages已部署：https://jacjackai.github.io/htmlppt
-- [ ] GitHub Actions已启用：https://github.com/jacjackai/htmlppt/actions
+- [ ] Tag已创建：https://github.com/jacjackai/htmlPPT/tags
+- [ ] Release已发布：https://github.com/jacjackai/htmlPPT/releases
+- [ ] GitHub Pages已部署：https://jacjackai.github.io/htmlPPT
+- [ ] GitHub Actions已启用：https://github.com/jacjackai/htmlPPT/actions
 - [ ] 项目信息已完善：检查About部分
 
 ### 测试命令
@@ -323,7 +323,7 @@ git ls-remote --tags origin
 
 ```bash
 # 方法1: 使用Personal Access Token
-git push https://jacjackai:YOUR_TOKEN@github.com/jacjackai/htmlppt.git main
+git push https://jacjackai:YOUR_TOKEN@github.com/jacjackai/htmlPPT.git main
 
 # 方法2: 配置SSH密钥
 ssh-keygen -t ed25519 -C "your_email@example.com"
@@ -401,7 +401,7 @@ git push origin main
 - 📖 [项目文档](docs/)
 - 📖 [部署指南](DEPLOYMENT_GUIDE.md)
 - 📖 [检查清单](DEPLOYMENT_CHECKLIST.md)
-- 🐛 [提交Issue](https://github.com/jacjackai/htmlppt/issues)
+- 🐛 [提交Issue](https://github.com/jacjackai/htmlPPT/issues)
 
 ---
 

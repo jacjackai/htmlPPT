@@ -33,7 +33,7 @@
 
 ```bash
 # 添加远程仓库
-git remote add origin https://github.com/jacjackai/htmlppt.git
+git remote add origin https://github.com/jacjackai/htmlPPT.git
 
 # 验证远程仓库
 git remote -v
@@ -69,7 +69,7 @@ git push origin v1.0.0
 
 ### 第五步：创建GitHub Release
 
-1. 访问 https://github.com/jacjackai/htmlppt/releases/new
+1. 访问 https://github.com/jacjackai/htmlPPT/releases/new
 2. 选择标签: `v1.0.0`
 3. 填写Release信息：
 
@@ -96,14 +96,14 @@ git push origin v1.0.0
 ## 快速开始
 
 ```bash
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 cd htmlppt
 open src/index.html
 ```
 
 ## 在线演示
 
-访问演示网站: https://jacjackai.github.io/htmlppt
+访问演示网站: https://jacjackai.github.io/htmlPPT
 
 ## 文档
 
@@ -124,7 +124,7 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ### 第六步：配置GitHub Pages
 
-1. 访问 https://github.com/jacjackai/htmlppt/settings/pages
+1. 访问 https://github.com/jacjackai/htmlPPT/settings/pages
 2. 配置Pages：
    - **Source**: `Deploy from a branch`
    - **Branch**: `main`
@@ -133,23 +133,23 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 等待几分钟后，你的网站将在以下地址可用：
 ```
-https://jacjackai.github.io/htmlppt
+https://jacjackai.github.io/htmlPPT
 ```
 
 ### 第七步：启用GitHub Actions
 
-1. 访问 https://github.com/jacjackai/htmlppt/settings/actions
+1. 访问 https://github.com/jacjackai/htmlPPT/settings/actions
 2. 在 "Actions permissions" 中选择：
    - ✅ Allow all actions and reusable workflows
 3. 点击 "Save"
 
 ### 第八步：添加项目信息
 
-1. 访问 https://github.com/jacjackai/htmlppt
+1. 访问 https://github.com/jacjackai/htmlPPT
 2. 点击 "About" 右侧的齿轮图标
 3. 填写项目信息：
    - **Description**: `HTML PPT - 纯前端演示文稿制作工具`
-   - **Website**: `https://jacjackai.github.io/htmlppt`
+   - **Website**: `https://jacjackai.github.io/htmlPPT`
    - **Topics**: `ppt`, `presentation`, `html`, `css`, `javascript`, `web`, `frontend`, `slides`, `demo`
 4. 点击 "Save topics"
 
@@ -165,7 +165,7 @@ https://jacjackai.github.io/htmlppt
 
 ### 第十步：验证部署
 
-1. 访问你的仓库: https://github.com/jacjackai/htmlppt
+1. 访问你的仓库: https://github.com/jacjackai/htmlPPT
 2. 检查：
    - ✅ 所有文件都已上传
    - ✅ README.md显示正确
@@ -181,15 +181,15 @@ https://jacjackai.github.io/htmlppt
 
 ```markdown
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/issues)
-[![GitHub release](https://img.shields.io/github/release/jacjackai/htmlppt)](https://github.com/jacjackai/htmlppt/releases)
+[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/issues)
+[![GitHub release](https://img.shields.io/github/release/jacjackai/htmlPPT)](https://github.com/jacjackai/htmlPPT/releases)
 ```
 
 ### 配置社交预览
 
-1. 访问 https://github.com/jacjackai/htmlppt/settings
+1. 访问 https://github.com/jacjackai/htmlPPT/settings
 2. 在 "Social preview" 中：
    - 添加项目截图
    - 设置描述
@@ -268,7 +268,7 @@ git push -f origin main
 
 1. 查看 [GitHub文档](https://docs.github.com)
 2. 查看 [项目文档](docs/)
-3. 创建 [Issue](https://github.com/jacjackai/htmlppt/issues)
+3. 创建 [Issue](https://github.com/jacjackai/htmlPPT/issues)
 
 ---
 

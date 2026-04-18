@@ -443,9 +443,9 @@ htmlppt/
 
 ## 📞 联系方式
 
-- **GitHub**: https://github.com/jacjackai/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlPPT
 - **NPM**: https://www.npmjs.com/package/htmlppt
-- **演示**: https://jacjackai.github.io/htmlppt
+- **演示**: https://jacjackai.github.io/htmlPPT
 
 ---
 

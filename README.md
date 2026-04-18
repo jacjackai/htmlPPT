@@ -1,19 +1,19 @@
 # 🎨 HTML PPT - 零依赖、纯前端、开箱即用的演示文稿制作工具
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlppt?style=social)](https://github.com/jacjackai/htmlppt/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlppt?style=social)](https://github.com/jacjackai/htmlppt/network/members)
-[![Build Status](https://github.com/jacjackai/htmlppt/workflows/CI/badge.svg)](https://github.com/jacjackai/htmlppt/actions)
-[![codecov](https://codecov.io/gh/jacjackai/htmlppt/branch/main/graph/badge.svg)](https://codecov.io/gh/jacjackai/htmlppt)
+[![GitHub stars](https://img.shields.io/github/stars/jacjackai/htmlPPT?style=social)](https://github.com/jacjackai/htmlPPT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jacjackai/htmlPPT?style=social)](https://github.com/jacjackai/htmlPPT/network/members)
+[![Build Status](https://github.com/jacjackai/htmlPPT/workflows/CI/badge.svg)](https://github.com/jacjackai/htmlPPT/actions)
+[![codecov](https://codecov.io/gh/jacjackai/htmlPPT/branch/main/graph/badge.svg)](https://codecov.io/gh/jacjackai/htmlPPT)
 [![npm](https://img.shields.io/npm/v/htmlppt)](https://www.npmjs.com/package/htmlppt)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/htmlppt)](https://bundlephobia.com/result?p=htmlppt)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlppt)
-[![Lightweight](https://img.shields.io/badge/size-<50KB-green)](https://github.com/jacjackai/htmlppt)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success)](https://github.com/jacjackai/htmlPPT)
+[![Lightweight](https://img.shields.io/badge/size-<50KB-green)](https://github.com/jacjackai/htmlPPT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 > 🚀 零依赖、纯前端、开箱即用的演示文稿制作工具
 
-[![演示截图](assets/images/demo-screenshot.png)](https://jacjackai.github.io/htmlppt)
+[![演示截图](assets/images/demo-screenshot.png)](https://jacjackai.github.io/htmlPPT)
 
 ## ✨ 特性
 
@@ -36,14 +36,14 @@
 
 ## 🎬 在线演示
 
-👉 **立即体验**: https://jacjackai.github.io/htmlppt
+👉 **立即体验**: https://jacjackai.github.io/htmlPPT
 
 ## 📦 安装
 
 ### 方式1：直接使用（推荐）
 ```bash
 # 克隆项目
-git clone https://github.com/jacjackai/htmlppt.git
+git clone https://github.com/jacjackai/htmlPPT.git
 
 # 进入目录
 cd htmlppt
@@ -231,8 +231,8 @@ htmlppt/
 
 感谢所有为这个项目做出贡献的开发者！
 
-<a href="https://github.com/jacjackai/htmlppt/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jacjackai/htmlppt" />
+<a href="https://github.com/jacjackai/htmlPPT/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jacjackai/htmlPPT" />
 </a>
 
 ## 📄 许可证
@@ -249,22 +249,22 @@ htmlppt/
 
 ## 📮 联系方式
 
-- **作者**: Your Name
+- **作者**: jacjackai
 - **邮箱**: your.email@example.com
-- **GitHub**: https://github.com/jacjackai/htmlppt
-- **网站**: https://jacjackai.github.io/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlPPT
+- **网站**: https://jacjackai.github.io/htmlPPT
 
 ## 🔗 相关链接
 
-- [在线演示](https://jacjackai.github.io/htmlppt)
-- [GitHub仓库](https://github.com/jacjackai/htmlppt)
+- [在线演示](https://jacjackai.github.io/htmlPPT)
+- [GitHub仓库](https://github.com/jacjackai/htmlPPT)
 - [NPM包](https://www.npmjs.com/package/htmlppt)
-- [问题反馈](https://github.com/jacjackai/htmlppt/issues)
-- [功能建议](https://github.com/jacjackai/htmlppt/discussions)
+- [问题反馈](https://github.com/jacjackai/htmlPPT/issues)
+- [功能建议](https://github.com/jacjackai/htmlPPT/discussions)
 
 ## 💬 讨论
 
-有任何问题或建议？欢迎在 [GitHub Discussions](https://github.com/jacjackai/htmlppt/discussions) 中讨论！
+有任何问题或建议？欢迎在 [GitHub Discussions](https://github.com/jacjackai/htmlPPT/discussions) 中讨论！
 
 ---
 

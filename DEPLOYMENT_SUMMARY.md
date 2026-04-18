@@ -162,7 +162,7 @@
 2. **配置远程仓库**
    ```bash
    cd /Users/jack/Project/htmlPPT
-   git remote add origin https://github.com/jacjackai/htmlppt.git
+   git remote add origin https://github.com/jacjackai/htmlPPT.git
    ```
 
 3. **推送代码**
@@ -177,23 +177,23 @@
    ```
 
 5. **创建Release**
-   - 访问：https://github.com/jacjackai/htmlppt/releases/new
+   - 访问：https://github.com/jacjackai/htmlPPT/releases/new
    - 选择标签：v1.0.0
    - 填写Release信息
    - 点击 "Publish release"
 
 6. **配置GitHub Pages**
-   - 访问：https://github.com/jacjackai/htmlppt/settings/pages
+   - 访问：https://github.com/jacjackai/htmlPPT/settings/pages
    - 配置：main branch, / (root)
    - 点击 "Save"
 
 7. **启用GitHub Actions**
-   - 访问：https://github.com/jacjackai/htmlppt/settings/actions
+   - 访问：https://github.com/jacjackai/htmlPPT/settings/actions
    - 启用Actions权限
    - 点击 "Save"
 
 8. **添加项目信息**
-   - 访问：https://github.com/jacjackai/htmlppt
+   - 访问：https://github.com/jacjackai/htmlPPT
    - 点击About右侧的齿轮
    - 填写项目信息
    - 点击 "Save"
@@ -341,9 +341,9 @@
 
 ## 📞 联系方式
 
-- **GitHub**: https://github.com/jacjackai/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlPPT
 - **NPM**: https://www.npmjs.com/package/htmlppt
-- **演示**: https://jacjackai.github.io/htmlppt
+- **演示**: https://jacjackai.github.io/htmlPPT
 
 ---
 

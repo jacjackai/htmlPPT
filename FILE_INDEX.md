@@ -3,7 +3,7 @@
 ## 📁 项目结构
 
 ```
-htmlppt/
+htmlPPT/
 ├── src/                      # 源代码目录
 │   ├── css/                 # 样式文件
 │   ├── js/                  # JavaScript模块
@@ -386,9 +386,9 @@ CONTRIBUTING.md
 
 ## 📞 联系方式
 
-- **GitHub**: https://github.com/jacjackai/htmlppt
-- **NPM**: https://www.npmjs.com/package/htmlppt
-- **演示**: https://jacjackai.github.io/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlPPT
+- **NPM**: https://www.npmjs.com/package/htmlPPT
+- **演示**: https://jacjackai.github.io/htmlPPT
 
 ## ⚠️ 重要提醒
 

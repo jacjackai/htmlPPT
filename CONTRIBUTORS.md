@@ -4,14 +4,14 @@
 
 ## 核心贡献者
 
-- **Your Name** - 项目创建者和维护者
+- **jacjackai** - 项目创建者和维护者
   - GitHub: [@jacjackai](https://github.com/jacjackai)
   - 贡献: 初始版本、核心功能、文档
 
 ## 贡献者列表
 
-<a href="https://github.com/jacjackai/htmlppt/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jacjackai/htmlppt" />
+<a href="https://github.com/jacjackai/htmlPPT/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jacjackai/htmlPPT" />
 </a>
 
 ## 如何成为贡献者
@@ -48,7 +48,7 @@
 如果你为这个项目做出了贡献，你可以在你的个人资料中展示这个徽章：
 
 ```
-[![HTML PPT Contributor](https://img.shields.io/badge/HTML%20PPT-Contributor-blue)](https://github.com/jacjackai/htmlppt)
+[![HTML PPT Contributor](https://img.shields.io/badge/HTML%20PPT-Contributor-blue)](https://github.com/jacjackai/htmlPPT)
 ```
 
 ---

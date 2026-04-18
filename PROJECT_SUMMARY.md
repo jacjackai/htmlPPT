@@ -290,10 +290,10 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 联系方式
 
-- **作者**: Your Name
+- **作者**: jacjackai
 - **邮箱**: your.email@example.com
-- **GitHub**: https://github.com/jacjackai/htmlppt
-- **网站**: https://jacjackai.github.io/htmlppt
+- **GitHub**: https://github.com/jacjackai/htmlPPT
+- **网站**: https://jacjackai.github.io/htmlPPT
 
 ---
 
