@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页PPT制作工具 - 修复演示模式问题</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Quill.js CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --primary-light: #7a9dc9;
+            --primary-dark: #1e456c;
+            --secondary-color: #6e9cd2;
+            --bg-color: #f5f5f7;
+            --sidebar-width: 280px;
+            --header-height: 50px;
+            --sidebar-bg: #2b2d42;
+            --slide-bg: #ffffff;
+            --border-color: #dee2e6;
+            --text-color: #333333;
+            --code-bg: #f8f9fa;
+            --panel-header-bg: #4a6fa5;
+            --panel-header-color: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+            --fab-size: 56px;
+        }
+        /* 暗色主题变量 */
+        [data-theme="dark"] {
+            --primary-color: #6e9cd2;
+            --primary-light: #9fc3e9;
+            --primary-dark: #3a5e8a;
+            --secondary-color: #8ab6d6;
+            --bg-color: #1a1c23;
+            --sidebar-bg: #2b2d42;
+            --slide-bg: #2d3047;
+            --border-color: #3a3e5b;
+            --text-color: #e9e9ec;
+            --code-bg: #252838;
+            --panel-header-bg: #3a3e5b;
+            --panel-header-color: #e9e9ec;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        /* 侧边栏样式 */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: width 0.3s, transform 0.3s;
+            position: relative;
+            z-index: 10;
+        }
+        .sidebar.collapsed {
+            width: 60px;
+            transform: translateX(0);
+        }
+        .sidebar.collapsed .sidebar-header h2,
+        .sidebar.collapsed .add-slide-btn span,
+        .sidebar.collapsed .slide-item .slide-number span,
+        .sidebar.collapsed .slide-item .preview {
+            display: none;
+        }
+        .sidebar.collapsed .slide-actions {
+            opacity: 1;
+            position: static;
+            flex-direction: column;
+            margin-top: 5px;
+        }
+        .sidebar-header {
+            padding: 0 0 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+        }
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .toggle-sidebar:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        /* 浮动操作按钮 */
+        .fab-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .fab {
+            width: var(--fab-size);
+            height: var(--fab-size);
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        .fab:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        .fab-main {
+            position: relative;
+            z-index: 2;
+        }
+        .fab-options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+        .fab-options.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .fab-option {
+            width: calc(var(--fab-size) - 16px);
+            height: calc(var(--fab-size) - 16px);
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .fab-option:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        .fab-tooltip {
+            position: absolute;
+            right: calc(var(--fab-size) + 10px);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+        .fab:hover .fab-tooltip,
+        .fab-option:hover .fab-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 现代化按钮样式 */
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        .btn:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+        }
+        .btn-light {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .btn-dark {
+            background-color: #343a40;
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+        .btn-lg {
+            padding: 12px 24px;
+            font-size: 1.1rem;
+        }
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+        }
+        .add-slide-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        .add-slide-btn:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-1px);
+        }
+        .slides-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .slide-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            box-shadow: var(--card-shadow);
+            border: 1px solid transparent;
+        }
+        .slide-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .slide-item.active {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3), var(--card-shadow-hover);
+        }
+        .slide-item .slide-number {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .slide-item .preview {
+            height: 60px;
+            background-color: var(--slide-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            padding: 8px;
+            color: #333;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] .slide-item .preview {
+            color: #e9e9ec;
+            background-color: #3a3e5b;
+        }
+        .slide-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .slide-item:hover .slide-actions {
+            opacity: 1;
+        }
+        .slide-actions button {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        .slide-actions button:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        /* 主内容区样式 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            transition: margin-left 0.3s;
+        }
+        .header {
+            height: var(--header-height);
+            background-color: var(--slide-bg);
+            box-shadow: var(--shadow);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 5;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .header-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        .header-btn:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--card-shadow);
+            transform: translateY(-1px);
+        }
+        .present-btn {
+            background-color: #ff9e00;
+        }
+        .present-btn:hover {
+            background-color: #e68a00;
+        }
+        .save-btn {
+            background-color: #28a745;
+        }
+        .save-btn:hover {
+            background-color: #218838;
+        }
+        .open-btn {
+            background-color: #17a2b8;
+        }
+        .open-btn:hover {
+            background-color: #138496;
+        }
+        .new-btn {
+            background-color: #6f42c1;
+        }
+        .new-btn:hover {
+            background-color: #5a2d9c;
+        }
+        .undo-btn {
+            background-color: #6c757d;
+        }
+        .undo-btn:hover {
+            background-color: #5a6268;
+        }
+        .redo-btn {
+            background-color: #6c757d;
+        }
+        .redo-btn:hover {
+            background-color: #5a6268;
+        }
+        .auto-save-btn {
+            background-color: #6610f2;
+        }
+        .auto-save-btn:hover {
+            background-color: #520dc7;
+        }
+        .auto-save-btn.on {
+            background-color: #20c997;
+        }
+        .auto-save-btn.on:hover {
+            background-color: #1aa37f;
+        }
+        .theme-toggle {
+            background-color: #6c757d;
+        }
+        .theme-toggle:hover {
+            background-color: #5a6268;
+        }
+        .editor-container {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .code-editor, .preview {
+            flex: 1;
+            background: var(--slide-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .code-editor:hover, .preview:hover {
+            box-shadow: var(--card-shadow-hover);
+        }
+        .panel-header {
+            padding: 15px;
+            background-color: var(--panel-header-bg);
+            color: var(--panel-header-color);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+        .code-area {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            resize: none;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 14px;
+            background-color: var(--code-bg);
+            color: var(--text-color);
+            border-bottom-left-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+        }
+        .preview-area {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-bottom-left-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+        }
+        /* 分割线样式 */
+        .resizer {
+            width: 10px;
+            background: var(--border-color);
+            cursor: col-resize;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        .resizer:hover {
+            background-color: var(--primary-color);
+        }
+        .resizer::after {
+            content: "⫽";
+            color: var(--text-color);
+            font-size: 12px;
+        }
+        /* 全屏演示模式 */
+        .presentation-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 10000;
+            display: none;
+        }
+        .slide-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+        .presentation-slide {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: none;
+        }
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .editor-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 200px;
+            }
+            .header {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+            }
+            .header-buttons {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .resizer {
+                width: 100%;
+                height: 10px;
+                cursor: row-resize;
+            }
+            .resizer::after {
+                content: "=";
+            }
+            .fab-container {
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+        /* 演示模式提示 */
+        .presentation-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 10002;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .presentation-mode .presentation-hint {
+            opacity: 1;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .file-input {
+            display: none;
+        }
+        /* 拖放样式 */
+        .slide-item.dragging {
+            opacity: 0.5;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .slide-item.drag-over {
+            border: 2px dashed #fff;
+        }
+        .auto-save-indicator {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .auto-save-indicator.show {
+            opacity: 1;
+        }
+        /* 空状态样式 */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--border-color);
+        }
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .empty-state p {
+            max-width: 500px;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .empty-state .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            font-size: 1.1rem;
+        }
+        /* 现代化滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+            background-clip: padding-box;
+        }
+        [data-theme="dark"] ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        /* 工具提示样式 */
+        .tooltip {
+            position: relative;
+        }
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 8px);
+        }
+        /* 加载动画 */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* 新增样式：用于预览区域的可编辑元素高亮和操作按钮 */
+        .preview-editable-element {
+            position: relative;
+            /* border: 1px dashed #6e9cd2; */ /* 可选：默认边框 */
+        }
+        .preview-editable-element:hover {
+            /* background-color: rgba(110, 156, 210, 0.1); */ /* 可选：悬停背景 */
+            box-shadow: 0 0 0 1px #6e9cd2; /* 悬停时的高亮边框 */
+        }
+        .edit-actions {
+            position: absolute;
+            top: -30px; /* 调整到元素上方 */
+            right: 0;
+            display: flex;
+            gap: 5px;
+            z-index: 1001; /* 确保在iframe内容之上 */
+            display: none; /* 默认隐藏 */
+        }
+        .preview-editable-element:hover .edit-actions {
+            display: flex; /* 鼠标悬停时显示 */
+        }
+        .edit-action-btn {
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .edit-action-btn:hover {
+            background-color: #1e456c;
+        }
+        /* 新增样式：Quill 模态框 */
+        #quillModal {
+            display: none;
+            position: fixed;
+            z-index: 10001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        #quillModalContent {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #quillEditor {
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            min-height: 200px;
+            overflow: auto;
+        }
+        #quillModalButtons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>幻灯片</h2>
+                <button class="toggle-sidebar tooltip" id="toggleSidebar" data-tooltip="切换侧边栏">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <button class="add-slide-btn" id="addSlide">
+                <i class="fas fa-plus"></i>
+                <span>新建幻灯片</span>
+            </button>
+            <div class="slides-list" id="slidesList">
+                <!-- 幻灯片列表将由JS生成 -->
+            </div>
+        </div>
+        <!-- 主内容区 -->
+        <div class="main-content" id="mainContent">
+            <div class="header">
+                <h2>网页PPT制作工具</h2>
+                <div class="header-buttons">
+                    <button class="header-btn auto-save-btn on tooltip" id="autoSaveToggle" data-tooltip="自动保存">
+                        <i class="fas fa-toggle-on"></i>
+                    </button>
+                    <button class="header-btn undo-btn tooltip" id="undoBtn" data-tooltip="撤销 (Ctrl+Z)">
+                        <i class="fas fa-undo"></i> 撤销
+                    </button>
+                    <button class="header-btn redo-btn tooltip" id="redoBtn" data-tooltip="重做 (Ctrl+Y)">
+                        <i class="fas fa-redo"></i> 重做
+                    </button>
+                    <button class="header-btn theme-toggle tooltip" id="themeToggle" data-tooltip="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn new-btn tooltip" id="newBtn" data-tooltip="新建项目 (Ctrl+N)">
+                        <i class="fas fa-file"></i> 新建
+                    </button>
+                    <button class="header-btn open-btn tooltip" id="openBtn" data-tooltip="打开项目 (Ctrl+O)">
+                        <i class="fas fa-folder-open"></i> 打开
+                    </button>
+                    <button class="header-btn save-btn tooltip" id="saveBtn" data-tooltip="保存项目 (Ctrl+S)">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                    <button class="header-btn present-btn tooltip" id="presentBtn" data-tooltip="演示模式">
+                        <i class="fas fa-play"></i> 演示模式
+                    </button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div class="code-editor" id="codeEditorPanel">
+                    <div class="panel-header">
+                        <span><i class="fas fa-code"></i> HTML 代码</span>
+                    </div>
+                    <textarea class="code-area" id="codeEditor" placeholder="在此处编写HTML代码..."></textarea>
+                </div>
+                <div class="resizer" id="resizer"></div>
+                <div class="preview" id="previewPanel">
+                    <div class="panel-header">
+                        <span><i class="fas fa-eye"></i> 实时预览</span>
+                    </div>
+                    <iframe class="preview-area" id="previewArea"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 浮动操作按钮 -->
+    <div class="fab-container">
+        <div class="fab-options" id="fabOptions">
+            <button class="fab-option tooltip" id="fabSave" data-tooltip="保存项目">
+                <i class="fas fa-save"></i>
+            </button>
+            <button class="fab-option tooltip" id="fabPresent" data-tooltip="演示模式">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+        <button class="fab fab-main" id="fabMain">
+            <i class="fas fa-plus" id="fabIcon"></i>
+        </button>
+    </div>
+    <!-- 全屏演示模式 -->
+    <div class="presentation-mode" id="presentationMode">
+        <div class="slide-container">
+            <iframe class="presentation-slide" id="presentationSlide"></iframe>
+        </div>
+        <div class="presentation-hint" id="presentationHint">
+            使用 ← → 方向键切换幻灯片，按 ESC 键退出演示模式
+        </div>
+    </div>
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>操作成功！</span>
+    </div>
+    <input type="file" id="fileInput" class="file-input" accept=".htmlppt,.json">
+    <div class="auto-save-indicator" id="autoSaveIndicator">
+        <div class="spinner"></div>
+        <span>自动保存中...</span>
+    </div>
+    <!-- 新增：Quill 模态框 -->
+    <div id="quillModal">
+        <div id="quillModalContent">
+            <div id="quillEditor"></div>
+            <div id="quillModalButtons">
+                <button id="quillSaveBtn" class="btn btn-primary">保存</button>
+                <button id="quillCancelBtn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+    <!-- 引入 Quill.js -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 幻灯片数据
+            let slides = [];
+            let currentSlideIndex = 0;
+            // 历史记录
+            let history = [];
+            let historyIndex = -1;
+            const MAX_HISTORY = 50;
+            // 自动保存设置
+            let autoSaveEnabled = true;
+            let autoSaveTimer = null;
+            const AUTO_SAVE_INTERVAL = 30000; // 30秒
+            // DOM元素
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const toggleSidebar = document.getElementById('toggleSidebar');
+            const slidesList = document.getElementById('slidesList');
+            const codeEditor = document.getElementById('codeEditor');
+            const previewArea = document.getElementById('previewArea');
+            const addSlideBtn = document.getElementById('addSlide');
+            const presentBtn = document.getElementById('presentBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const openBtn = document.getElementById('openBtn');
+            const newBtn = document.getElementById('newBtn');
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            const autoSaveToggle = document.getElementById('autoSaveToggle');
+            const themeToggle = document.getElementById('themeToggle');
+            const fileInput = document.getElementById('fileInput');
+            const presentationMode = document.getElementById('presentationMode');
+            const presentationSlide = document.getElementById('presentationSlide');
+            const presentationHint = document.getElementById('presentationHint');
+            const notification = document.getElementById('notification');
+            const autoSaveIndicator = document.getElementById('autoSaveIndicator');
+            const resizer = document.getElementById('resizer');
+            const codeEditorPanel = document.getElementById('codeEditorPanel');
+            const previewPanel = document.getElementById('previewPanel');
+            const fabMain = document.getElementById('fabMain');
+            const fabOptions = document.getElementById('fabOptions');
+            const fabIcon = document.getElementById('fabIcon');
+            const fabSave = document.getElementById('fabSave');
+            const fabPresent = document.getElementById('fabPresent');
+            // 演示模式键盘事件处理函数
+            let presentationKeyHandler = null;
+            // --- 新增变量 ---
+            let quill; // Quill 实例
+            let currentEditableId = null; // 当前正在编辑的元素 ID
+            let currentElementType = null; // 当前正在编辑的元素类型 ('text' 或 'image')
+            // --- 新增变量结束 ---
+            // 初始化
+            loadFromLocalStorage();
+            setupAutoSave();
+            updateUndoRedoButtons();
+            initResizer();
+            // --- 新增：初始化 Quill ---
+            quill = new Quill('#quillEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                },
+                placeholder: '在此编辑内容...'
+            });
+            // 隐藏默认工具栏
+            const quillToolbar = quill.getModule('toolbar');
+            if (quillToolbar) {
+                 quillToolbar.container.style.display = 'none';
+            }
+            // --- 新增：初始化 Quill 结束 ---
+            // FAB按钮功能
+            fabMain.addEventListener('click', function() {
+                fabOptions.classList.toggle('show');
+                fabIcon.classList.toggle('fa-plus');
+                fabIcon.classList.toggle('fa-times');
+            });
+            fabSave.addEventListener('click', function() {
+                saveToFile();
+                fabOptions.classList.remove('show');
+                fabIcon.classList.remove('fa-times');
+                fabIcon.classList.add('fa-plus');
+            });
+            fabPresent.addEventListener('click', function() {
+                enterPresentationMode();
+                fabOptions.classList.remove('show');
+                fabIcon.classList.remove('fa-times');
+                fabIcon.classList.add('fa-plus');
+            });
+            // --- 新增：Quill 模态框按钮事件 ---
+            document.getElementById('quillSaveBtn').addEventListener('click', saveAndCloseQuill);
+            document.getElementById('quillCancelBtn').addEventListener('click', closeQuillModal);
+            // 点击模态框背景关闭
+            document.getElementById('quillModal').addEventListener('click', function(e) {
+                if (e.target.id === 'quillModal') {
+                    closeQuillModal();
+                }
+            });
+            // --- 新增：Quill 模态框按钮事件结束 ---
+            // 事件监听
+            codeEditor.addEventListener('input', function() {
+                updatePreview();
+                addToHistory();
+            });
+            addSlideBtn.addEventListener('click', addNewSlide);
+            presentBtn.addEventListener('click', enterPresentationMode);
+            saveBtn.addEventListener('click', saveToFile);
+            openBtn.addEventListener('click', () => fileInput.click());
+            newBtn.addEventListener('click', createNewProject);
+            undoBtn.addEventListener('click', undo);
+            redoBtn.addEventListener('click', redo);
+            autoSaveToggle.addEventListener('click', toggleAutoSave);
+            themeToggle.addEventListener('click', toggleTheme);
+            toggleSidebar.addEventListener('click', toggleSidebarVisibility);
+            fileInput.addEventListener('change', handleFileSelect);
+            // --- 新增：监听来自 iframe 的消息 ---
+            window.addEventListener('message', handleMessage);
+            // --- 新增：监听来自 iframe 的消息结束 ---
+            // 键盘快捷键
+            // --- 修改：将全局键盘监听器函数提取出来，以便可以移除和添加 ---
+            const globalKeyHandler = function(e) {
+                if (e.key === 'Escape' && presentationMode.style.display === 'flex') {
+                    exitPresentationMode();
+                }
+                // 演示模式下的导航 (注意：这部分现在由演示模式专用监听器处理)
+                // if (presentationMode.style.display === 'flex') {
+                //     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') showNextSlide();
+                //     if (e.key === 'ArrowLeft' || e.key === 'PageUp') showPreviousSlide();
+                // }
+                // 保存快捷键
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveToFile();
+                }
+                // 打开快捷键
+                if (e.ctrlKey && e.key === 'o') {
+                    e.preventDefault();
+                    fileInput.click();
+                }
+                // 新建快捷键
+                if (e.ctrlKey && e.key === 'n') {
+                    e.preventDefault();
+                    createNewProject();
+                }
+                // 撤销重做快捷键
+                if (e.ctrlKey && !e.shiftKey && e.key === 'z') {
+                    e.preventDefault();
+                    undo();
+                }
+                if (e.ctrlKey && e.shiftKey && e.key === 'z') {
+                    e.preventDefault();
+                    redo();
+                }
+                // 切换侧边栏快捷键
+                if (e.ctrlKey && e.key === 'b') {
+                    e.preventDefault();
+                    toggleSidebarVisibility();
+                }
+            };
+            document.addEventListener('keydown', globalKeyHandler); // 添加全局监听器
+            // --- 修改结束 ---
+
+            // 添加新幻灯片
+            function addNewSlide() {
+                const newSlide = {
+                    id: Date.now(),
+                    html: '<div class="slide-content">\n    <h1>新幻灯片</h1>\n    <p>在此处编辑您的内容</p>\n</div>',
+                    title: `幻灯片 ${slides.length + 1}`
+                };
+                slides.push(newSlide);
+                addToHistory();
+                renderSlidesList();
+                switchToSlide(slides.length - 1);
+                showNotification('幻灯片已添加');
+            }
+            // 渲染幻灯片列表
+            function renderSlidesList() {
+                slidesList.innerHTML = '';
+                if (slides.length === 0) {
+                    slidesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-file-image"></i>
+                            <h3>暂无幻灯片</h3>
+                            <p>点击"新建幻灯片"按钮开始创建您的演示文稿</p>
+                        </div>
+                    `;
+                    return;
+                }
+                slides.forEach((slide, index) => {
+                    const slideElement = document.createElement('div');
+                    slideElement.className = `slide-item ${index === currentSlideIndex ? 'active' : ''}`;
+                    slideElement.dataset.id = slide.id;
+                    slideElement.draggable = true;
+                    // 截取HTML内容作为预览文本
+                    const previewText = slide.html.replace(/<[^>]*>/g, '').substring(0, 100) + '...';
+                    slideElement.innerHTML = `
+                        <div class="slide-number">
+                            <span>${index + 1}. ${slide.title}</span>
+                            <div class="slide-actions">
+                                <button class="add-above tooltip" data-tooltip="在上方添加"><i class="fas fa-arrow-up"></i></button>
+                                <button class="add-below tooltip" data-tooltip="在下方添加"><i class="fas fa-arrow-down"></i></button>
+                                <button class="delete-slide tooltip" data-tooltip="删除"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="preview">${previewText}</div>
+                    `;
+                    slideElement.addEventListener('click', () => switchToSlide(index));
+                    // 添加幻灯片操作按钮
+                    const addAboveBtn = slideElement.querySelector('.add-above');
+                    const addBelowBtn = slideElement.querySelector('.add-below');
+                    const deleteBtn = slideElement.querySelector('.delete-slide');
+                    addAboveBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addSlideAtPosition(index);
+                    });
+                    addBelowBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addSlideAtPosition(index + 1);
+                    });
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteSlide(index);
+                    });
+                    // 拖放功能
+                    slideElement.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('text/plain', index);
+                        slideElement.classList.add('dragging');
+                    });
+                    slideElement.addEventListener('dragend', () => {
+                        slideElement.classList.remove('dragging');
+                    });
+                    slideElement.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        slideElement.classList.add('drag-over');
+                    });
+                    slideElement.addEventListener('dragleave', () => {
+                        slideElement.classList.remove('drag-over');
+                    });
+                    slideElement.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        slideElement.classList.remove('drag-over');
+                        const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                        const toIndex = index;
+                        if (fromIndex !== toIndex) {
+                            moveSlide(fromIndex, toIndex);
+                        }
+                    });
+                    slidesList.appendChild(slideElement);
+                });
+            }
+            // 在指定位置添加幻灯片
+            function addSlideAtPosition(position) {
+                const newSlide = {
+                    id: Date.now(),
+                    html: '<div class="slide-content">\n    <h2>新幻灯片</h2>\n    <p>在位置' + (position + 1) + '添加的新幻灯片</p>\n</div>',
+                    title: `幻灯片 ${slides.length + 1}`
+                };
+                slides.splice(position, 0, newSlide);
+                currentSlideIndex = position;
+                addToHistory();
+                renderSlidesList();
+                switchToSlide(currentSlideIndex);
+                showNotification('幻灯片已添加');
+            }
+            // 移动幻灯片
+            function moveSlide(fromIndex, toIndex) {
+                if (fromIndex === toIndex) return;
+                const slide = slides.splice(fromIndex, 1)[0];
+                slides.splice(toIndex, 0, slide);
+                // 更新当前选中的幻灯片索引
+                if (currentSlideIndex === fromIndex) {
+                    currentSlideIndex = toIndex;
+                } else if (fromIndex < currentSlideIndex && toIndex >= currentSlideIndex) {
+                    currentSlideIndex--;
+                } else if (fromIndex > currentSlideIndex && toIndex <= currentSlideIndex) {
+                    currentSlideIndex++;
+                }
+                addToHistory();
+                renderSlidesList();
+                showNotification('幻灯片顺序已调整');
+            }
+            // 切换到指定幻灯片
+            function switchToSlide(index) {
+                if (index >= 0 && index < slides.length) {
+                    currentSlideIndex = index;
+                    codeEditor.value = slides[currentSlideIndex].html;
+                    updatePreview();
+                    renderSlidesList();
+                }
+            }
+            // 删除幻灯片
+            function deleteSlide(index) {
+                if (slides.length <= 1) {
+                    showNotification('至少需要保留一个幻灯片', true);
+                    return;
+                }
+                slides.splice(index, 1);
+                if (currentSlideIndex >= index) {
+                    currentSlideIndex = Math.max(0, currentSlideIndex - 1);
+                }
+                addToHistory();
+                renderSlidesList();
+                switchToSlide(currentSlideIndex);
+                showNotification('幻灯片已删除');
+            }
+            // --- 修改：更新预览函数 ---
+            function updatePreview() {
+                const htmlContent = codeEditor.value;
+                slides[currentSlideIndex].html = htmlContent;
+                const previewDocument = previewArea.contentDocument || previewArea.contentWindow.document;
+                previewDocument.open();
+                // 注入编辑脚本和样式
+                const injectedHtml = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                        /* 注入的样式 */
+                        .preview-editable-element {
+                            position: relative;
+                        }
+                        .preview-editable-element:hover {
+                            box-shadow: 0 0 0 1px #6e9cd2;
+                        }
+                        .edit-actions {
+                            position: absolute;
+                            top: -30px;
+                            right: 0;
+                            display: flex;
+                            gap: 5px;
+                            z-index: 1001;
+                            display: none; /* 默认隐藏 */
+                        }
+                        .preview-editable-element:hover .edit-actions {
+                            display: flex; /* 鼠标悬停时显示 */
+                        }
+                        .edit-action-btn {
+                            background-color: #4a6fa5;
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            padding: 4px 8px;
+                            cursor: pointer;
+                            font-size: 12px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                            transition: background-color 0.2s;
+                        }
+                        .edit-action-btn:hover {
+                            background-color: #1e456c;
+                        }
+                        /* 确保图片等比缩放 */
+                        .preview-editable-element img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${htmlContent}
+                    <script>
+                        (function() {
+                            let editableIdCounter = Date.now();
+                            const editableElements = [];
+                            function makeEditable() {
+                                // 定义可编辑元素的选择器
+                                // 这里选择包含文本的块级元素和媒体元素
+                                const selector = 'p, h1, h2, h3, h4, h5, h6, li, td, caption, div.slide-content > *:not(style):not(script), img, video';
+                                const elements = document.querySelectorAll(selector);
+                                elements.forEach(el => {
+                                    // 跳过已经处理过的元素或装饰性元素
+                                    if (el.dataset.editableId || el.tagName === 'BR' || el.tagName === 'HR' || el.classList.contains('no-edit')) {
+                                        return;
+                                    }
+                                    const id = 'elem_' + (++editableIdCounter);
+                                    el.dataset.editableId = id;
+                                    el.classList.add('preview-editable-element');
+                                    editableElements.push({id: id, element: el});
+                                    // 创建操作按钮
+                                    const actionsDiv = document.createElement('div');
+                                    actionsDiv.className = 'edit-actions';
+                                    const editBtn = document.createElement('button');
+                                    editBtn.className = 'edit-action-btn';
+                                    editBtn.textContent = '编辑';
+                                    editBtn.addEventListener('click', function(e) {
+                                        e.stopPropagation();
+                                        const id = el.dataset.editableId;
+                                        let htmlContent = '';
+                                        let elementType = 'text';
+                                        if (el.tagName === 'IMG') {
+                                            htmlContent = el.outerHTML;
+                                            elementType = 'image';
+                                        } else {
+                                            // 对于容器元素，传递其内部HTML
+                                            htmlContent = el.innerHTML;
+                                        }
+                                        // 发送消息到父窗口
+                                        window.parent.postMessage({
+                                            type: 'EDIT_ELEMENT',
+                                            payload: {
+                                                editableId: id,
+                                                htmlContent: htmlContent,
+                                                elementType: elementType
+                                            }
+                                        }, '*');
+                                    });
+                                    const deleteBtn = document.createElement('button');
+                                    deleteBtn.className = 'edit-action-btn';
+                                    deleteBtn.textContent = '删除';
+                                    deleteBtn.addEventListener('click', function(e) {
+                                        e.stopPropagation();
+                                        const id = el.dataset.editableId;
+                                        // 发送消息到父窗口
+                                        window.parent.postMessage({
+                                            type: 'DELETE_ELEMENT',
+                                            payload: {
+                                                editableId: id
+                                            }
+                                        }, '*');
+                                        // 在iframe内立即移除元素以提供即时反馈
+                                        el.remove();
+                                    });
+                                    actionsDiv.appendChild(editBtn);
+                                    actionsDiv.appendChild(deleteBtn);
+                                    el.appendChild(actionsDiv);
+                                });
+                            }
+                            // 页面加载完成后执行
+                            if (document.readyState === 'loading') {
+                                document.addEventListener('DOMContentLoaded', makeEditable);
+                            } else {
+                                makeEditable();
+                            }
+                            // 监听可能的DOM变化（例如，通过代码编辑器更新后）
+                            const observer = new MutationObserver(function(mutations) {
+                                mutations.forEach(function(mutation) {
+                                    if (mutation.type === 'childList') {
+                                        // 简单地重新处理整个页面，或者可以更精细地处理新增节点
+                                        // 这里采用简单方式
+                                        makeEditable();
+                                    }
+                                });
+                            });
+                            observer.observe(document.body, {
+                                childList: true,
+                                subtree: true
+                            });
+                        })();
+                    <\/script>
+                </body>
+                </html>
+                `;
+                previewDocument.write(injectedHtml);
+                previewDocument.close();
+                // 更新幻灯片列表中的预览文本
+                renderSlidesList();
+            }
+            // --- 修改：更新预览函数结束 ---
+            // 保存到文件
+            function saveToFile() {
+                if (slides.length === 0) {
+                    showNotification('没有幻灯片可保存', true);
+                    return;
+                }
+                try {
+                    // 创建包含所有幻灯片数据的对象
+                    const projectData = {
+                        version: '1.0',
+                        savedAt: new Date().toISOString(),
+                        slides: slides
+                    };
+                    // 转换为JSON字符串
+                    const jsonData = JSON.stringify(projectData, null, 2);
+                    // 创建Blob对象
+                    const blob = new Blob([jsonData], { type: 'application/json' });
+                    // 创建下载链接
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = `html-ppt-project-${new Date().toISOString().slice(0, 10)}.htmlppt`;
+                    // 触发下载
+                    document.body.appendChild(a);
+                    a.click();
+                    // 清理
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(a.href);
+                    }, 100);
+                    showNotification('项目已保存');
+                } catch (error) {
+                    console.error('保存错误:', error);
+                    showNotification('保存失败: ' + error.message, true);
+                }
+            }
+            // 处理文件选择
+            function handleFileSelect(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const contents = e.target.result;
+                        const projectData = JSON.parse(contents);
+                        // 验证文件格式
+                        if (!projectData.slides || !Array.isArray(projectData.slides)) {
+                            throw new Error('无效的项目文件格式');
+                        }
+                        // 加载幻灯片数据
+                        slides = projectData.slides;
+                        currentSlideIndex = 0;
+                        // 更新UI
+                        addToHistory();
+                        renderSlidesList();
+                        switchToSlide(currentSlideIndex);
+                        // 保存到本地存储
+                        saveToLocalStorage();
+                        showNotification('项目已加载');
+                    } catch (error) {
+                        console.error('文件加载错误:', error);
+                        showNotification('加载失败: ' + error.message, true);
+                    }
+                };
+                reader.onerror = function() {
+                    showNotification('读取文件时发生错误', true);
+                };
+                reader.readAsText(file);
+                // 重置文件输入，允许再次选择同一文件
+                event.target.value = '';
+            }
+            // 创建新项目
+            function createNewProject() {
+                if (confirm('创建新项目将丢失当前未保存的更改。确定要继续吗？')) {
+                    slides = [];
+                    currentSlideIndex = 0;
+                    history = [];
+                    historyIndex = -1;
+                    // 清除本地存储
+                    localStorage.removeItem('htmlPptProject');
+                    // 添加默认幻灯片
+                    addNewSlide();
+                    showNotification('已创建新项目');
+                }
+            }
+            // 进入演示模式
+            function enterPresentationMode() {
+                if (slides.length === 0) {
+                    showNotification('没有幻灯片可演示', true);
+                    return;
+                }
+                presentationMode.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                // --- 修改：进入演示模式时，移除全局键盘监听器 ---
+                document.removeEventListener('keydown', globalKeyHandler);
+                // --- 修改结束 ---
+                // 添加演示模式专用的键盘事件监听
+                setupPresentationKeyListeners();
+                // 进入全屏模式
+                if (presentationMode.requestFullscreen) {
+                    presentationMode.requestFullscreen().catch(err => {
+                        console.log('全屏请求错误:', err);
+                    });
+                } else if (presentationMode.webkitRequestFullscreen) {
+                    presentationMode.webkitRequestFullscreen();
+                } else if (presentationMode.msRequestFullscreen) {
+                    presentationMode.msRequestFullscreen();
+                }
+                loadCurrentSlideInPresentation();
+                // 显示提示信息
+                setTimeout(() => {
+                    presentationHint.style.opacity = 0;
+                }, 3000);
+            }
+            // 设置演示模式键盘监听
+            function setupPresentationKeyListeners() {
+                // 移除可能存在的旧监听器
+                if (presentationKeyHandler) {
+                    window.removeEventListener('keydown', presentationKeyHandler);
+                }
+                // 创建新的键盘事件处理函数
+                presentationKeyHandler = function(e) {
+                    if (e.key === 'Escape') {
+                        exitPresentationMode();
+                    } else if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                        showNextSlide();
+                    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                        showPreviousSlide();
+                    }
+                };
+                // 添加事件监听（使用捕获阶段以确保接收到事件）
+                window.addEventListener('keydown', presentationKeyHandler, true);
+                // 注意：移除了为iframe添加事件监听的代码，避免重复监听
+            }
+            // 退出演示模式
+            function exitPresentationMode() {
+                presentationMode.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                // 移除演示模式专用的键盘事件监听
+                if (presentationKeyHandler) {
+                    window.removeEventListener('keydown', presentationKeyHandler, true);
+                    presentationKeyHandler = null;
+                }
+                // --- 修改：退出演示模式时，重新添加全局键盘监听器 ---
+                document.addEventListener('keydown', globalKeyHandler);
+                // --- 修改结束 ---
+                // 退出全屏模式
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+            // 在演示模式中加载当前幻灯片
+            function loadCurrentSlideInPresentation() {
+                // 使用更健壮的方法处理HTML内容
+                let htmlContent = slides[currentSlideIndex].html;
+                // 移除标题标签，防止在演示模式中显示
+                htmlContent = htmlContent.replace(/<title>.*?<\/title>/i, '');
+                // 创建临时div来提取body内容
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlContent;
+                // 获取body内容
+                let bodyContent = '';
+                const bodyElement = tempDiv.querySelector('body');
+                if (bodyElement) {
+                    bodyContent = bodyElement.innerHTML;
+                } else {
+                    // 如果没有body标签，使用整个内容
+                    bodyContent = htmlContent;
+                }
+                // 获取head中的样式
+                let styleContent = '';
+                const styleElements = tempDiv.querySelectorAll('style');
+                styleElements.forEach(style => {
+                    styleContent += style.outerHTML;
+                });
+                const presentationDocument = presentationSlide.contentDocument || presentationSlide.contentWindow.document;
+                presentationDocument.open();
+                presentationDocument.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                min-height: 100vh;
+                                overflow: auto;
+                            }
+                            /* 确保内容容器填满整个iframe */
+                            html, body {
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                min-height: 100vh;
+                            }
+                        </style>
+                        ${styleContent}
+                    </head>
+                    <body>
+                        ${bodyContent}
+                    </body>
+                    </html>
+                `);
+                presentationDocument.close();
+                // 添加事件监听器到iframe中的按钮，确保点击后焦点不会影响键盘事件
+                setTimeout(() => {
+                    const iframeDoc = presentationSlide.contentDocument || presentationSlide.contentWindow.document;
+                    const buttons = iframeDoc.querySelectorAll('button, a, input, select, textarea');
+                    buttons.forEach(button => {
+                        // 为所有可交互元素添加点击后重新聚焦到父窗口的逻辑
+                        button.addEventListener('click', () => {
+                            // 短暂延迟后重新聚焦到父窗口，确保键盘事件能被捕获
+                            setTimeout(() => {
+                                window.focus();
+                            }, 100);
+                        });
+                        // 防止这些元素获取焦点后阻止键盘事件传播
+                        button.addEventListener('focus', () => {
+                            // 添加一个透明 overlay 来捕获键盘事件
+                            addFocusOverlay(iframeDoc);
+                        });
+                        button.addEventListener('blur', () => {
+                            // 移除 overlay
+                            removeFocusOverlay(iframeDoc);
+                        });
+                    });
+                }, 100);
+            }
+            // 添加焦点 overlay
+            function addFocusOverlay(iframeDoc) {
+                // 检查是否已存在 overlay
+                if (!iframeDoc.getElementById('keyboard-capture-overlay')) {
+                    const overlay = iframeDoc.createElement('div');
+                    overlay.id = 'keyboard-capture-overlay';
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100%';
+                    overlay.style.height = '100%';
+                    overlay.style.backgroundColor = 'transparent';
+                    overlay.style.zIndex = '9999';
+                    overlay.style.cursor = 'default';
+                    // 添加键盘事件监听
+                    overlay.addEventListener('keydown', function(e) {
+                        // 阻止事件传播到iframe
+                        e.stopPropagation();
+                        // 手动触发父窗口的键盘事件
+                        const event = new KeyboardEvent('keydown', {
+                            key: e.key,
+                            code: e.code,
+                            keyCode: e.keyCode,
+                            which: e.which,
+                            bubbles: true,
+                            cancelable: true
+                        });
+                        window.dispatchEvent(event);
+                    }, true);
+                    iframeDoc.body.appendChild(overlay);
+                }
+            }
+            // 移除焦点 overlay
+            function removeFocusOverlay(iframeDoc) {
+                const overlay = iframeDoc.getElementById('keyboard-capture-overlay');
+                if (overlay) {
+                    overlay.remove();
+                }
+            }
+            // 显示上一张幻灯片
+            function showPreviousSlide() {
+                if (currentSlideIndex > 0) {
+                    switchToSlide(currentSlideIndex - 1);
+                    loadCurrentSlideInPresentation();
+                }
+            }
+            // 显示下一张幻灯片
+            function showNextSlide() {
+                if (currentSlideIndex < slides.length - 1) {
+                    switchToSlide(currentSlideIndex + 1);
+                    loadCurrentSlideInPresentation();
+                }
+            }
+            // 显示通知
+            function showNotification(message, isError = false) {
+                notification.innerHTML = `
+                    <i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                notification.style.backgroundColor = isError ? '#e63946' : '#28a745';
+                notification.className = 'notification show';
+                setTimeout(() => {
+                    notification.className = 'notification';
+                }, 3000);
+            }
+            // 历史记录功能
+            function addToHistory() {
+                // 移除当前索引之后的历史记录
+                if (historyIndex < history.length - 1) {
+                    history = history.slice(0, historyIndex + 1);
+                }
+                // 添加新状态到历史记录
+                history.push(JSON.parse(JSON.stringify(slides)));
+                // 限制历史记录大小
+                if (history.length > MAX_HISTORY) {
+                    history.shift();
+                }
+                historyIndex = history.length - 1;
+                updateUndoRedoButtons();
+            }
+            function undo() {
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    slides = JSON.parse(JSON.stringify(history[historyIndex]));
+                    renderSlidesList();
+                    switchToSlide(currentSlideIndex);
+                    updateUndoRedoButtons();
+                    showNotification('已撤销');
+                }
+            }
+            function redo() {
+                if (historyIndex < history.length - 1) {
+                    historyIndex++;
+                    slides = JSON.parse(JSON.stringify(history[historyIndex]));
+                    renderSlidesList();
+                    switchToSlide(currentSlideIndex);
+                    updateUndoRedoButtons();
+                    showNotification('已重做');
+                }
+            }
+            function updateUndoRedoButtons() {
+                undoBtn.disabled = historyIndex <= 0;
+                redoBtn.disabled = historyIndex >= history.length - 1;
+                undoBtn.style.opacity = undoBtn.disabled ? '0.5' : '1';
+                redoBtn.style.opacity = redoBtn.disabled ? '0.5' : '1';
+            }
+            // 自动保存功能
+            function setupAutoSave() {
+                if (autoSaveTimer) {
+                    clearInterval(autoSaveTimer);
+                }
+                if (autoSaveEnabled) {
+                    autoSaveTimer = setInterval(() => {
+                        saveToLocalStorage();
+                        autoSaveIndicator.className = 'auto-save-indicator show';
+                        setTimeout(() => {
+                            autoSaveIndicator.className = 'auto-save-indicator';
+                        }, 2000);
+                    }, AUTO_SAVE_INTERVAL);
+                }
+            }
+            function toggleAutoSave() {
+                autoSaveEnabled = !autoSaveEnabled;
+                // 更新按钮状态
+                if (autoSaveEnabled) {
+                    autoSaveToggle.classList.add('on');
+                    autoSaveToggle.innerHTML = '<i class="fas fa-toggle-on"></i>';
+                    setupAutoSave();
+                    showNotification('自动保存已开启');
+                } else {
+                    autoSaveToggle.classList.remove('on');
+                    autoSaveToggle.innerHTML = '<i class="fas fa-toggle-off"></i>';
+                    if (autoSaveTimer) {
+                        clearInterval(autoSaveTimer);
+                    }
+                    showNotification('自动保存已关闭');
+                }
+            }
+            // 主题切换功能
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'light');
+                    showNotification('已切换到亮色主题');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    localStorage.setItem('theme', 'dark');
+                    showNotification('已切换到暗色主题');
+                }
+            }
+            // 侧边栏折叠功能
+            function toggleSidebarVisibility() {
+                sidebar.classList.toggle('collapsed');
+                if (sidebar.classList.contains('collapsed')) {
+                    toggleSidebar.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                } else {
+                    toggleSidebar.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                }
+            }
+            // 分割线调整功能
+            function initResizer() {
+                const editor = codeEditorPanel;
+                const preview = previewPanel;
+                let isResizing = false;
+                resizer.addEventListener('mousedown', function(e) {
+                    isResizing = true;
+                    document.addEventListener('mousemove', handleResize);
+                    document.addEventListener('mouseup', stopResize);
+                });
+                function handleResize(e) {
+                    if (!isResizing) return;
+                    const containerRect = document.querySelector('.editor-container').getBoundingClientRect();
+                    const dx = e.clientX - containerRect.left;
+                    const containerWidth = containerRect.width;
+                    const editorPercent = (dx / containerWidth) * 100;
+                    const previewPercent = 100 - editorPercent;
+                    editor.style.flex = `0 0 ${editorPercent}%`;
+                    preview.style.flex = `0 0 ${previewPercent}%`;
+                    // 防止文本选中
+                    e.preventDefault();
+                }
+                function stopResize() {
+                    isResizing = false;
+                    document.removeEventListener('mousemove', handleResize);
+                    document.removeEventListener('mouseup', stopResize);
+                }
+            }
+            function saveToLocalStorage() {
+                if (slides.length > 0) {
+                    const projectData = {
+                        version: '1.0',
+                        savedAt: new Date().toISOString(),
+                        slides: slides
+                    };
+                    localStorage.setItem('htmlPptProject', JSON.stringify(projectData));
+                }
+            }
+            function loadFromLocalStorage() {
+                try {
+                    // 加载主题设置
+                    const savedTheme = localStorage.getItem('theme');
+                    if (savedTheme === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    }
+                    const savedData = localStorage.getItem('htmlPptProject');
+                    if (savedData) {
+                        const projectData = JSON.parse(savedData);
+                        if (projectData.slides && Array.isArray(projectData.slides) && projectData.slides.length > 0) {
+                            slides = projectData.slides;
+                            currentSlideIndex = 0;
+                            renderSlidesList();
+                            switchToSlide(currentSlideIndex);
+                            // 添加到历史记录
+                            addToHistory();
+                            showNotification('已恢复自动保存的项目');
+                            return;
+                        }
+                    }
+                } catch (error) {
+                    console.error('加载本地存储错误:', error);
+                }
+                // 如果没有保存的数据或加载失败，添加默认幻灯片
+                addNewSlide();
+            }
+            // --- 新增：处理来自 iframe 的消息 ---
+            function handleMessage(event) {
+                // 简单的安全检查，生产环境建议更严格
+                // if (event.origin !== window.location.origin) return;
+                const data = event.data;
+                if (data && data.type) {
+                    switch (data.type) {
+                        case 'EDIT_ELEMENT':
+                            openQuillEditor(data.payload.editableId, data.payload.htmlContent, data.payload.elementType);
+                            break;
+                        case 'DELETE_ELEMENT':
+                            deleteElementFromHtml(data.payload.editableId);
+                            break;
+                        default:
+                            console.warn('Unknown message type:', data.type);
+                    }
+                }
+            }
+            // --- 新增：处理来自 iframe 的消息结束 ---
+            // --- 新增：打开 Quill 编辑器 ---
+            function openQuillEditor(editableId, htmlContent, elementType) {
+                currentEditableId = editableId;
+                currentElementType = elementType;
+                // 根据元素类型调整 Quill 工具栏（简化处理）
+                // 实际应用中可以更精细地控制
+                // 例如，如果是图片，可以只显示尺寸调整相关工具
+                // 这里保持默认工具栏
+                // 将内容设置到 Quill
+                // Quill 需要 HTML 内容，但最好通过 clipboard 模块来设置，以确保格式正确
+                quill.clipboard.dangerouslyPasteHTML(htmlContent);
+                // 显示模态框
+                document.getElementById('quillModal').style.display = 'block';
+            }
+            // --- 新增：打开 Quill 编辑器结束 ---
+            // --- 新增：保存并关闭 Quill ---
+            function saveAndCloseQuill() {
+                // 从 Quill 获取内容
+                const newContent = quill.root.innerHTML;
+                // 调用更新函数
+                updateElementInHtml(currentEditableId, newContent, currentElementType);
+                // 关闭模态框
+                closeQuillModal();
+            }
+            function closeQuillModal() {
+                document.getElementById('quillModal').style.display = 'none';
+                // 清空 Quill 内容
+                quill.setContents([]);
+                currentEditableId = null;
+                currentElementType = null;
+            }
+            // --- 新增：保存并关闭 Quill 结束 ---
+            // --- 新增：更新 HTML 字符串 ---
+            function updateElementInHtml(editableId, newContent, elementType) {
+                try {
+                    let currentHtml = slides[currentSlideIndex].html;
+                    // 使用 DOMParser 解析 HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(currentHtml, 'text/html');
+                    // 查找目标元素
+                    const targetElement = doc.querySelector(`[data-editable-id="${editableId}"]`);
+                    if (targetElement) {
+                        if (elementType === 'image') {
+                            // 处理图片
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = newContent;
+                            const newImgElement = tempDiv.querySelector('img');
+                            if (newImgElement) {
+                                // 更新图片属性
+                                // 保留原有的 data-editable-id 和其他重要属性
+                                const oldId = targetElement.dataset.editableId;
+                                const oldClass = targetElement.className;
+                                // 复制新图片的所有属性到旧图片元素
+                                // 先清空旧元素属性
+                                while (targetElement.attributes.length > 0) {
+                                    targetElement.removeAttribute(targetElement.attributes[0].name);
+                                }
+                                // 复制新元素的属性
+                                for (let attr of newImgElement.attributes) {
+                                    targetElement.setAttribute(attr.name, attr.value);
+                                }
+                                // 恢复关键属性
+                                targetElement.dataset.editableId = oldId;
+                                targetElement.className = oldClass; // 可能需要追加 'preview-editable-element'
+                                // 确保等比缩放样式
+                                let styleAttr = targetElement.getAttribute('style') || '';
+                                if (!styleAttr.includes('max-width')) {
+                                    styleAttr += ' max-width: 100%;';
+                                }
+                                if (!styleAttr.includes('height: auto')) {
+                                    styleAttr += ' height: auto;';
+                                }
+                                targetElement.setAttribute('style', styleAttr.trim());
+                            }
+                        } else {
+                            // 处理文本/容器元素
+                            targetElement.innerHTML = newContent;
+                        }
+                        // 序列化回 HTML 字符串
+                        // 提取 body 内容
+                        let updatedHtml = '';
+                        for (let node of doc.body.childNodes) {
+                            updatedHtml += node.outerHTML || node.textContent || '';
+                        }
+                        // 更新 slides 数组
+                        slides[currentSlideIndex].html = updatedHtml;
+                        // 更新 UI
+                        codeEditor.value = updatedHtml;
+                        updatePreview(); // 重新渲染预览，包括重新注入脚本
+                        addToHistory(); // 添加到历史记录
+                    } else {
+                        console.error('Element with data-editable-id not found in parsed HTML:', editableId);
+                        showNotification('更新失败：未找到元素', true);
+                    }
+                } catch (error) {
+                    console.error('Error updating element in HTML:', error);
+                    showNotification('更新失败：' + error.message, true);
+                }
+            }
+            // --- 新增：更新 HTML 字符串结束 ---
+            // --- 新增：从 HTML 中删除元素 ---
+            function deleteElementFromHtml(editableId) {
+                try {
+                    let currentHtml = slides[currentSlideIndex].html;
+                    // 使用 DOMParser 解析 HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(currentHtml, 'text/html');
+                    // 查找目标元素
+                    const targetElement = doc.querySelector(`[data-editable-id="${editableId}"]`);
+                    if (targetElement) {
+                        // 删除元素
+                        targetElement.remove();
+                        // 序列化回 HTML 字符串
+                        let updatedHtml = '';
+                        for (let node of doc.body.childNodes) {
+                            updatedHtml += node.outerHTML || node.textContent || '';
+                        }
+                        // 更新 slides 数组
+                        slides[currentSlideIndex].html = updatedHtml;
+                        // 更新 UI
+                        codeEditor.value = updatedHtml;
+                        updatePreview(); // 重新渲染预览
+                        addToHistory(); // 添加到历史记录
+                        showNotification('元素已删除');
+                    } else {
+                        console.error('Element to delete with data-editable-id not found:', editableId);
+                        // 如果 iframe 内已经删除，这里可能找不到，可以不提示错误
+                    }
+                } catch (error) {
+                    console.error('Error deleting element from HTML:', error);
+                    showNotification('删除失败：' + error.message, true);
+                }
+            }
+            // --- 新增：从 HTML 中删除元素结束 ---
+            // 初始化预览
+            updatePreview();
+        });
+    </script>
+</body>
+</html>

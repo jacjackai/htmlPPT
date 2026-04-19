@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页PPT制作工具</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6e9cd2;
+            --bg-color: #f5f5f7;
+            --sidebar-width: 250px;
+            --header-height: 50px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: #333;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            overflow-y: auto;
+            height: 100vh;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #4a6572;
+        }
+        
+        .add-slide-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .add-slide-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .slides-list {
+            padding: 20px;
+        }
+        
+        .slide-item {
+            background-color: #4a6572;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .slide-item.active {
+            background-color: var(--secondary-color);
+            transform: scale(1.02);
+        }
+        
+        .slide-item:hover {
+            background-color: #567086;
+        }
+        
+        /* 主内容区样式 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            height: var(--header-height);
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .present-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .editor-container {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+        }
+        
+        .code-editor, .preview {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .panel-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .code-area {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            resize: none;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .preview-area {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 全屏演示模式 */
+        .presentation-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 10000;
+            display: none;
+        }
+        
+        .slide-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+        
+        .presentation-slide {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .editor-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 200px;
+            }
+        }
+        
+        /* 演示模式提示 */
+        .presentation-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 10002;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        
+        .presentation-mode .presentation-hint {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <button class="add-slide-btn" id="addSlide">+ 新建幻灯片</button>
+            </div>
+            <div class="slides-list" id="slidesList">
+                <!-- 幻灯片列表将由JS生成 -->
+            </div>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <div class="header">
+                <h2>网页PPT制作工具</h2>
+                <button class="present-btn" id="presentBtn">演示模式</button>
+            </div>
+            
+            <div class="editor-container">
+                <div class="code-editor">
+                    <div class="panel-header">HTML 代码</div>
+                    <textarea class="code-area" id="codeEditor" placeholder="在此处粘贴您的HTML代码..."></textarea>
+                </div>
+                
+                <div class="preview">
+                    <div class="panel-header">实时预览</div>
+                    <iframe class="preview-area" id="previewArea"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 全屏演示模式 -->
+    <div class="presentation-mode" id="presentationMode">
+        <div class="slide-container">
+            <iframe class="presentation-slide" id="presentationSlide"></iframe>
+        </div>
+        <div class="presentation-hint" id="presentationHint">
+            使用 ← → 方向键切换幻灯片，按 ESC 键退出演示模式
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 幻灯片数据
+            let slides = [];
+            let currentSlideIndex = 0;
+            
+            // DOM元素
+            const slidesList = document.getElementById('slidesList');
+            const codeEditor = document.getElementById('codeEditor');
+            const previewArea = document.getElementById('previewArea');
+            const addSlideBtn = document.getElementById('addSlide');
+            const presentBtn = document.getElementById('presentBtn');
+            const presentationMode = document.getElementById('presentationMode');
+            const presentationSlide = document.getElementById('presentationSlide');
+            const presentationHint = document.getElementById('presentationHint');
+            
+            // 添加默认幻灯片
+            addNewSlide();
+            
+            // 事件监听
+            codeEditor.addEventListener('input', updatePreview);
+            addSlideBtn.addEventListener('click', addNewSlide);
+            presentBtn.addEventListener('click', enterPresentationMode);
+            
+            // 键盘快捷键
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && presentationMode.style.display === 'flex') {
+                    exitPresentationMode();
+                }
+                
+                // 演示模式下的导航
+                if (presentationMode.style.display === 'flex') {
+                    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') showNextSlide();
+                    if (e.key === 'ArrowLeft' || e.key === 'PageUp') showPreviousSlide();
+                }
+            });
+            
+            // 添加新幻灯片
+            function addNewSlide() {
+                const newSlide = {
+                    id: Date.now(),
+                    html: '<!DOCTYPE html>\n<html>\n<head>\n    <title>新幻灯片</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            padding: 40px;\n            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);\n            margin: 0;\n            min-height: 100vh;\n            box-sizing: border-box;\n        }\n        h1 {\n            color: #4a6fa5;\n            text-align: center;\n            margin-top: 100px;\n            font-size: 2.5em;\n        }\n        .content {\n            max-width: 900px;\n            margin: 0 auto;\n        }\n    </style>\n</head>\n<body>\n    <div class="content">\n        <h1>欢迎使用网页PPT工具</h1>\n        <p style="text-align: center; font-size: 1.2em;">在此处编辑您的内容</p>\n    </div>\n</body>\n</html>'
+                };
+                
+                slides.push(newSlide);
+                renderSlidesList();
+                switchToSlide(slides.length - 1);
+            }
+            
+            // 渲染幻灯片列表
+            function renderSlidesList() {
+                slidesList.innerHTML = '';
+                
+                slides.forEach((slide, index) => {
+                    const slideElement = document.createElement('div');
+                    slideElement.className = `slide-item ${index === currentSlideIndex ? 'active' : ''}`;
+                    slideElement.innerHTML = `幻灯片 ${index + 1}`;
+                    
+                    slideElement.addEventListener('click', () => switchToSlide(index));
+                    
+                    // 添加删除按钮
+                    const deleteBtn = document.createElement('span');
+                    deleteBtn.innerHTML = '✕';
+                    deleteBtn.style.cssText = 'float: right; cursor: pointer;';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteSlide(index);
+                    });
+                    
+                    slideElement.appendChild(deleteBtn);
+                    slidesList.appendChild(slideElement);
+                });
+            }
+            
+            // 切换到指定幻灯片
+            function switchToSlide(index) {
+                if (index >= 0 && index < slides.length) {
+                    currentSlideIndex = index;
+                    codeEditor.value = slides[currentSlideIndex].html;
+                    updatePreview();
+                    renderSlidesList();
+                }
+            }
+            
+            // 删除幻灯片
+            function deleteSlide(index) {
+                if (slides.length <= 1) {
+                    alert('至少需要保留一个幻灯片');
+                    return;
+                }
+                
+                slides.splice(index, 1);
+                
+                if (currentSlideIndex >= index) {
+                    currentSlideIndex = Math.max(0, currentSlideIndex - 1);
+                }
+                
+                renderSlidesList();
+                switchToSlide(currentSlideIndex);
+            }
+            
+            // 更新预览
+            function updatePreview() {
+                const htmlContent = codeEditor.value;
+                slides[currentSlideIndex].html = htmlContent;
+                
+                const previewDocument = previewArea.contentDocument || previewArea.contentWindow.document;
+                previewDocument.open();
+                previewDocument.write(htmlContent);
+                previewDocument.close();
+            }
+            
+            // 进入演示模式
+            function enterPresentationMode() {
+                presentationMode.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // 进入全屏模式
+                if (presentationMode.requestFullscreen) {
+                    presentationMode.requestFullscreen().catch(err => {
+                        console.log('全屏请求错误:', err);
+                    });
+                } else if (presentationMode.webkitRequestFullscreen) {
+                    presentationMode.webkitRequestFullscreen();
+                } else if (presentationMode.msRequestFullscreen) {
+                    presentationMode.msRequestFullscreen();
+                }
+                
+                loadCurrentSlideInPresentation();
+                
+                // 显示提示信息
+                setTimeout(() => {
+                    presentationHint.style.opacity = 0;
+                }, 3000);
+            }
+            
+            // 退出演示模式
+            function exitPresentationMode() {
+                presentationMode.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // 退出全屏模式
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+            
+            // 在演示模式中加载当前幻灯片
+            function loadCurrentSlideInPresentation() {
+                // 使用更健壮的方法处理HTML内容
+                let htmlContent = slides[currentSlideIndex].html;
+                
+                // 移除标题标签，防止在演示模式中显示
+                htmlContent = htmlContent.replace(/<title>.*?<\/title>/i, '');
+                
+                // 创建临时div来提取body内容
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlContent;
+                
+                // 获取body内容
+                let bodyContent = '';
+                const bodyElement = tempDiv.querySelector('body');
+                if (bodyElement) {
+                    bodyContent = bodyElement.innerHTML;
+                } else {
+                    // 如果没有body标签，使用整个内容
+                    bodyContent = htmlContent;
+                }
+                
+                // 获取head中的样式
+                let styleContent = '';
+                const styleElements = tempDiv.querySelectorAll('style');
+                styleElements.forEach(style => {
+                    styleContent += style.outerHTML;
+                });
+                
+                const presentationDocument = presentationSlide.contentDocument || presentationSlide.contentWindow.document;
+                presentationDocument.open();
+                presentationDocument.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                min-height: 100vh;
+                                overflow: auto;
+                            }
+                            /* 确保内容容器填满整个iframe */
+                            html, body {
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                min-height: 100vh;
+                            }
+                        </style>
+                        ${styleContent}
+                    </head>
+                    <body>
+                        ${bodyContent}
+                    </body>
+                    </html>
+                `);
+                presentationDocument.close();
+            }
+            
+            // 显示上一张幻灯片
+            function showPreviousSlide() {
+                if (currentSlideIndex > 0) {
+                    switchToSlide(currentSlideIndex - 1);
+                    loadCurrentSlideInPresentation();
+                }
+            }
+            
+            // 显示下一张幻灯片
+            function showNextSlide() {
+                if (currentSlideIndex < slides.length - 1) {
+                    switchToSlide(currentSlideIndex + 1);
+                    loadCurrentSlideInPresentation();
+                }
+            }
+            
+            // 初始化预览
+            updatePreview();
+        });
+    </script>
+</body>
+</html>

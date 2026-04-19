@@ -18,21 +18,20 @@ build/
 
 # Testing
 coverage/
-.nyc_output/
 
-# Environment
-.env
-.env.local
-.env.*.local
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+openharness-venv/
+venv/
+.venv/
 
-# Temporary files
-*.tmp
-*.temp
-.cache/
+# Backup files
+*.bak
+*.legacy
+*.orig
 
-# OS
+# OS files
 Thumbs.db
-.DS_Store
-
-# No read folder (RESTRICTED)
-noRead/
