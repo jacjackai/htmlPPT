@@ -1,6 +1,6 @@
 {
   "name": "htmlppt",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "🎨 零依赖、纯前端、开箱即用的演示文稿制作工具",
   "main": "src/index.html",
   "scripts": {
