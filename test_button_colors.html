@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Color Test</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #6366f1;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 600px;
+        }
+        
+        .button-group {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .button-group h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 5px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .present-btn {
+            background-color: var(--secondary-color);
+        }
+        
+        .present-btn:hover {
+            background-color: color-mix(in srgb, var(--secondary-color), black 15%);
+        }
+        
+        .save-btn {
+            background-color: #28a745;
+        }
+        
+        .save-btn:hover {
+            background-color: #218838;
+        }
+        
+        .undo-btn, .redo-btn, .theme-toggle {
+            background-color: #6c757d;
+        }
+        
+        .undo-btn:hover, .redo-btn:hover, .theme-toggle:hover {
+            background-color: #5a6268;
+        }
+        
+        .auto-save-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .auto-save-btn.on {
+            background-color: #20c997;
+        }
+    </style>
+</head>
+<body>
+    <h1>Unified Button Color Test</h1>
+    <p>All buttons should now use a consistent color scheme:</p>
+    
+    <div class="button-grid">
+        <div class="button-group">
+            <h3>Primary Buttons</h3>
+            <button class="btn header-btn">Open</button>
+            <button class="btn header-btn new-btn">New</button>
+            <button class="btn header-btn export-btn">Export</button>
+            <button class="btn header-btn auto-save-btn">Auto Save</button>
+        </div>
+        
+        <div class="button-group">
+            <h3>Action Buttons</h3>
+            <button class="btn save-btn">Save</button>
+            <button class="btn present-btn">Present</button>
+            <button class="btn undo-btn">Undo</button>
+            <button class="btn redo-btn">Redo</button>
+        </div>
+        
+        <div class="button-group">
+            <h3>Utility Buttons</h3>
+            <button class="btn theme-toggle">Theme</button>
+            <button class="btn auto-save-btn on">Auto Save (On)</button>
+            <button class="btn header-btn">Generic</button>
+        </div>
+    </div>
+    
+    <div style="margin-top: 30px; padding: 15px; background: white; border-radius: 8px;">
+        <h3>Color Scheme Reference</h3>
+        <p><strong>Primary Color:</strong> #3b82f6 (Blue)</p>
+        <p><strong>Secondary Color:</strong> #6366f1 (Indigo)</p>
+        <p><strong>Success Color:</strong> #28a745 (Green for Save)</p>
+        <p><strong>Gray Color:</strong> #6c757d (For undo/redo/theme)</p>
+        <p><strong>Active Green:</strong> #20c997 (For active auto-save)</p>
+    </div>
+</body>
+</html>

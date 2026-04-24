@@ -76,12 +76,12 @@ describe('Theme', () => {
       expect(manager.getCurrentThemeName()).toBe('light');
     });
 
-    test('should toggle between light and dark', () => {
-      manager.setTheme('light');
-      manager.toggle();
-      expect(manager.getCurrentThemeName()).toBe('dark');
-      manager.toggle();
-      expect(manager.getCurrentThemeName()).toBe('light');
-    });
+  test('should toggle between light and dark', () => {
+    manager.setTheme('light');
+    manager.toggleTheme();
+    expect(manager.getCurrentThemeName()).toBe('dark');
+    manager.toggleTheme();
+    expect(manager.getCurrentThemeName()).toBe('light');
+  });
   });
 });

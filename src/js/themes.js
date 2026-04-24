@@ -9,10 +9,10 @@
 export const lightTheme = {
   name: 'light',
   colors: {
-    'primary-color': '#4a6fa5',
-    'primary-light': '#7a9dc9',
-    'primary-dark': '#1e456c',
-    'secondary-color': '#6e9cd2',
+    'primary-color': '#ffd700',
+    'primary-light': '#ffed4e',
+    'primary-dark': '#e6c200',
+    'secondary-color': '#ffcc00',
     'bg-color': '#f5f5f7',
     'sidebar-bg': '#2b2d42',
     'slide-bg': '#ffffff',
@@ -20,8 +20,8 @@ export const lightTheme = {
     'text-color': '#333333',
     'text-secondary': '#666666',
     'code-bg': '#f8f9fa',
-    'panel-header-bg': '#4a6fa5',
-    'panel-header-color': '#ffffff',
+    'panel-header-bg': '#ffd700',
+    'panel-header-color': '#374151',
     'success-color': '#28a745',
     'warning-color': '#ffc107',
     'error-color': '#dc3545',
@@ -48,19 +48,19 @@ export const lightTheme = {
 export const darkTheme = {
   name: 'dark',
   colors: {
-    'primary-color': '#6e9cd2',
-    'primary-light': '#9fc3e9',
-    'primary-dark': '#3a5e8a',
-    'secondary-color': '#8ab6d6',
-    'bg-color': '#1a1c23',
-    'sidebar-bg': '#2b2d42',
-    'slide-bg': '#2d3047',
-    'border-color': '#3a3e5b',
-    'text-color': '#e9e9ec',
-    'text-secondary': '#a0a0a0',
-    'code-bg': '#252838',
-    'panel-header-bg': '#3a3e5b',
-    'panel-header-color': '#e9e9ec',
+    'primary-color': '#ffd700',
+    'primary-light': '#ffed4e',
+    'primary-dark': '#e6c200',
+    'secondary-color': '#ffcc00',
+    'bg-color': '#121212', /* Pure black for true dark mode */
+    'sidebar-bg': '#1e1e1e', /* Slightly lighter black for sidebar */
+    'slide-bg': '#181818', /* Dark gray for slides */
+    'border-color': '#333333', /* Subtle border for dark mode */
+    'text-color': '#e0e0e0', /* Light gray text */
+    'text-secondary': '#a0a0a0', /* Secondary text color */
+    'code-bg': '#1e1e1e', /* Code background */
+    'panel-header-bg': '#2a2a2a', /* Panel header background */
+    'panel-header-color': '#ffd700', /* Gold text for contrast */
     'success-color': '#4caf50',
     'warning-color': '#ff9800',
     'error-color': '#f44336',

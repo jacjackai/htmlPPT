@@ -26,7 +26,7 @@ export class HTMLPPT {
     // Options
     this.options = {
       container: options.container || '#app',
-      theme: options.theme || 'light',
+      theme: options.theme || 'dark',
       autoSave: options.autoSave !== false,
       autoSaveInterval: options.autoSaveInterval || 30000,
       maxHistory: options.maxHistory || 50,
@@ -34,11 +34,14 @@ export class HTMLPPT {
 
     // Initialize modules
     this.slideManager = new SlideManager();
-    this.themeManager = new ThemeManager();
+    this.themeManager = new ThemeManager({ defaultTheme: this.options.theme });
     this.storage = new ProjectStorage();
     this.history = new History({ maxSize: this.options.maxHistory });
     this.presentation = null;
     this.presentationController = null;
+
+    // Current filename
+    this.filename = options.filename || 'HTML PPT';
 
     // Auto save
     this.autoSave = new AutoSave({
@@ -49,9 +52,6 @@ export class HTMLPPT {
 
     // Event listeners
     this.listeners = {};
-
-    // Initialize
-    this.initialize();
   }
 
   /**
@@ -82,6 +82,7 @@ export class HTMLPPT {
       const data = {
         slides: this.slideManager.toJSON(),
         theme: this.themeManager.getCurrentThemeName(),
+        filename: this.filename,
         timestamp: new Date().toISOString(),
       };
 
@@ -383,13 +384,14 @@ export class HTMLPPT {
   /**
    * Export data
    * @param {string} format - Export format
-   * @param {Object} options - Export options
+   * @param {Object} _options - Export options (unused)
    * @returns {Promise<string>} Exported data
    */
-  async export(format = 'json', options = {}) {
+  async export(format = 'json', _options = {}) {
     const data = {
       slides: this.slideManager.toJSON(),
       theme: this.themeManager.getCurrentThemeName(),
+      filename: this.filename || 'HTML PPT',
       version: '1.0.0',
       exportedAt: new Date().toISOString(),
     };
@@ -455,12 +457,53 @@ export class HTMLPPT {
    * @returns {string} Share URL
    */
   getShareUrl() {
-    const data = this.slideManager.toJSON();
-    const encoded = btoa(JSON.stringify(data));
+    const data = {
+      version: '1.0.0',
+      savedAt: new Date().toISOString(),
+      slides: this.slideManager.toJSON(),
+      theme: this.themeManager.getCurrentThemeName(),
+    };
+
+    // Use more robust encoding to handle special characters
+    const jsonString = JSON.stringify(data);
+    const encoded = btoa(encodeURIComponent(jsonString));
+
     const url = new URL(window.location.href);
     url.searchParams.set('mode', 'presentation');
     url.searchParams.set('data', encoded);
     return url.toString();
+  }
+
+  /**
+   * Load project from URL parameters
+   * @param {string} data - URL data parameter
+   * @returns {Promise<boolean>} Success status
+   */
+  async loadFromUrlParams(data) {
+    try {
+      // Decode URL parameter
+      const decodedData = decodeURIComponent(atob(data));
+      const projectData = JSON.parse(decodedData);
+
+      // Validate data structure
+      if (!projectData || !projectData.slides || !Array.isArray(projectData.slides)) {
+        throw new Error('Invalid project data structure');
+      }
+
+      // Import project
+      const success = await this.import(projectData, 'json');
+
+      if (success) {
+        this.emit('url:load:success', projectData);
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error('URL参数加载错误:', error);
+      this.emit('url:load:error', error);
+      return false;
+    }
   }
 
   /**

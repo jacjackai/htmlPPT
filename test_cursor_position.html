@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>Cursor Position Test</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-area {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        
+        #test-title {
+            font-size: 24px;
+            padding: 12px 16px;
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            outline: none;
+            min-width: 300px;
+            cursor: text;
+            margin: 15px 0;
+        }
+        
+        #test-title:focus {
+            border-color: #1d4ed8;
+            background-color: #f0f7ff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .instructions {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cursor Position Test</h1>
+    <p>Testing that cursor doesn't jump to beginning after IME composition</p>
+    
+    <div class="instructions">
+        <h3>How to test:</h3>
+        <ol>
+            <li>Click in the middle of the existing text "演示文稿制作"</li>
+            <li>Switch to Chinese input method</li>
+            <li>Type some characters (e.g., "测试")</li>
+            <li>Select the Chinese characters from candidate box</li>
+            <li><strong>Observe:</strong> Cursor should stay where you were typing, not jump to beginning</li>
+        </ol>
+    </div>
+    
+    <div class="test-area">
+        <h3>Editable Title with Cursor Position Preservation</h3>
+        <h2 id="test-title" contenteditable="true" spellcheck="false" lang="zh-CN">演示文稿制作</h2>
+        
+        <div class="status" id="status">Status: Ready</div>
+        <div class="status" id="cursor-status">Cursor position: Not tracked</div>
+    </div>
+    
+    <div class="test-area">
+        <h3>Expected Behavior</h3>
+        <ul>
+            <li>✅ Cursor stays at insertion point during IME composition</li>
+            <li>✅ After selecting characters, cursor remains after inserted text</li>
+            <li>✅ No jumping to beginning of line</li>
+            <li>✅ Can continue typing without cursor issues</li>
+        </ul>
+    </div>
+    
+    <script>
+        const testTitle = document.getElementById('test-title');
+        const statusEl = document.getElementById('status');
+        const cursorStatusEl = document.getElementById('cursor-status');
+        
+        let isComposing = false;
+        let lastCursorPosition = 0;
+        
+        // Track cursor position
+        function getCursorPosition() {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                const preCaretRange = range.cloneRange();
+                preCaretRange.selectNodeContents(testTitle);
+                preCaretRange.setEnd(range.endContainer, range.endOffset);
+                return preCaretRange.toString().length;
+            }
+            return 0;
+        }
+        
+        // Update cursor position display
+        function updateCursorStatus() {
+            const pos = getCursorPosition();
+            cursorStatusEl.textContent = `Cursor position: ${pos}`;
+            lastCursorPosition = pos;
+        }
+        
+        // Handle composition start
+        testTitle.addEventListener('compositionstart', () => {
+            isComposing = true;
+            statusEl.textContent = 'Status: Composing started';
+            updateCursorStatus();
+        });
+        
+        // Handle composition end
+        testTitle.addEventListener('compositionend', () => {
+            isComposing = false;
+            statusEl.textContent = 'Status: Composition ended';
+            
+            // Update after small delay
+            setTimeout(() => {
+                updateCursorStatus();
+                statusEl.textContent = 'Status: Ready for more input';
+            }, 50);
+        });
+        
+        // Handle input with debounce
+        let inputTimeout = null;
+        testTitle.addEventListener('input', () => {
+            if (isComposing) return;
+            
+            clearTimeout(inputTimeout);
+            inputTimeout = setTimeout(() => {
+                updateCursorStatus();
+            }, 200);
+        });
+        
+        // Handle click to update cursor position
+        testTitle.addEventListener('click', () => {
+            updateCursorStatus();
+        });
+        
+        // Handle keyup to update cursor position
+        testTitle.addEventListener('keyup', () => {
+            if (!isComposing) {
+                updateCursorStatus();
+            }
+        });
+        
+        // Initial status
+        updateCursorStatus();
+    </script>
+</body>
+</html>

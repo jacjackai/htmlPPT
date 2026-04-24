@@ -51,10 +51,10 @@ export class Template {
 
   /**
    * Interpolate content with slide data
-   * @param {string} content - Content string
+   * @param {string} _content - Content string (unused)
    * @returns {string} Interpolated content
    */
-  interpolateContent(content) {
+  interpolateContent(_content) {
     let result = this.content.default || '';
 
     // Replace placeholders
@@ -100,9 +100,9 @@ export class Template {
 export class TemplateManager {
   /**
    * Create template manager
-   * @param {Object} options - Template manager options
+   * @param {Object} _options - Template manager options (unused)
    */
-  constructor(options = {}) {
+  constructor(_options = {}) {
     this.templates = new Map();
     this.categories = new Set();
     this.listeners = {};

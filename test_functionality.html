@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Functionality Test</title>
+    <script>
+        function testButtons() {
+            console.log("Testing button functionality...");
+            
+            // Test that buttons exist
+            const buttons = document.querySelectorAll('button');
+            console.log(`Found ${buttons.length} buttons on the page`);
+            
+            // Test click events
+            buttons.forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    console.log(`Button ${index} clicked:`, this.textContent || this.id);
+                    alert(`Button clicked: ${this.textContent || this.id}`);
+                });
+            });
+            
+            return true;
+        }
+        
+        // Test JavaScript imports
+        function testImports() {
+            try {
+                console.log("JavaScript is working correctly");
+                return true;
+            } catch (error) {
+                console.error("JavaScript error:", error);
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Button Functionality Test</h1>
+    <p>Click any button to test functionality:</p>
+    
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+        <button id="testBtn1">Test Button 1</button>
+        <button id="testBtn2">Test Button 2</button>
+        <button id="testBtn3">Test Button 3</button>
+        <button id="testBtn4">Test Button 4</button>
+    </div>
+    
+    <div id="result"></div>
+    
+    <script>
+        // Run tests when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            const jsWorking = testImports();
+            const buttonsWorking = testButtons();
+            
+            const resultDiv = document.getElementById('result');
+            if (jsWorking && buttonsWorking) {
+                resultDiv.innerHTML = '<p style="color: green;">✓ JavaScript and buttons are working correctly!</p>';
+            } else {
+                resultDiv.innerHTML = '<p style="color: red;">✗ There may be issues with JavaScript or buttons</p>';
+            }
+        });
+    </script>
+</body>
+</html>

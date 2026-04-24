@@ -105,6 +105,16 @@ export class SlideManager {
   }
 
   /**
+   * Set current slide index
+   * @param {number} index - New current slide index
+   */
+  setCurrentSlideIndex(index) {
+    if (index >= 0 && index < this.slides.length) {
+      this.currentSlideIndex = index;
+    }
+  }
+
+  /**
    * Add new slide
    * @param {Object} options - Slide options
    * @param {number} position - Position to insert (default: end)

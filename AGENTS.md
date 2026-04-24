@@ -202,7 +202,132 @@ npm run release      # standard-version 生成版本号
 - `src/index.html` 包含内嵌的完整 CSS（约 700 行），修改样式时需同步更新 `src/css/styles.css`
 - `app.js` 是非模块化的独立版本，与模块化版本（`main.js` 等）功能重叠但实现独立
 - `.bak` 文件是备份文件（`index.html.bak`、`app.js.bak`、`styles.css.bak`），非活动代码
-- 测试覆盖率较低，仅有 3 个单元测试文件
+- `noRead/` 目录包含旧版本文件（HtmlPPT_v1-v7.html），为历史备份，不应修改
+- 测试覆盖率较低，单元测试文件较为基础，未完全覆盖所有模块
 - 导出为图片功能依赖 html2canvas 库，但在 `app.js` 中仅做了提示，未实际集成
 - PDF 导出通过 `jsPDF` 实现，在 `export.js` 中为 HTML 转 PDF 的简化实现
 - 分享功能通过 URL 参数（Base64 编码）传递项目数据，大项目可能超出 URL 长度限制
+
+## Webpack 和构建配置
+
+### Webpack 入口点
+- **生产构建入口**: `src/js/app.js` → 输出到 `dist/js/app.js`
+- **模块化版本**: `src/js/main.js`（包含 HTMLPPT 主类），用于开发和直接引用
+- **DOM 绑定层**: `src/js/app-entry.js` 将 HTMLPPT 绑定到 DOM，由 Webpack 打包时使用
+
+### 构建流程
+```bash
+npm run build        # 完整构建（CSS + JS）
+npm run build:css    # PostCSS 处理（无 postcss.config.js，直接使用 CLI）
+npm run build:js     # Webpack 生产构建（mode=production）
+```
+
+### Webpack 关键配置
+- **Babel 转译**: `@babel/preset-env`，目标浏览器：`>1%`, `last 2 versions`, `not dead`
+- **代码分割**: `splitChunks: { chunks: 'all' }`
+- **清理输出**: `output.clean: true`，每次构建前清空 dist/
+- **性能警告**: 入口和资源超过 512KB 时警告
+- **PostCSS**: 使用 PostCSS CLI 直接处理，无独立配置文件
+
+## 测试指南
+
+### Jest 配置
+- **环境**: jsdom（模拟浏览器 DOM）
+- **Setup 文件**: `tests/setup.js` 提供 localStorage 和 window 方法 mock
+- **测试匹配**: `tests/**/*.test.js`
+- **覆盖率**: 覆盖 `src/js/**/*.js`，排除测试文件和 vendor 目录
+- **CSS Mock**: 所有 `.css` 文件映射到 `tests/__mocks__/styleMock.js`
+
+### 测试运行
+```bash
+npm test              # 运行所有测试
+npm run test:watch    # 监听模式
+npm run test:coverage # 生成覆盖率报告
+```
+
+### 测试注意事项
+- 测试文件较为基础，主要测试数据结构和简单逻辑
+- 使用 `jest.fn()` mock window.alert、window.confirm、window.prompt
+- localStorage 在测试中完全使用内存实现
+- 测试覆盖率不高，新增功能时应补充测试
+
+## Git Hooks 和工作流
+
+### Git Hooks（package.json 中配置）
+```bash
+precommit    # 提交前自动运行: npm run validate
+prepush      # 推送前自动运行: npm run validate
+```
+
+`npm run validate` = lint + format:check + test（三个步骤都必须通过）
+
+### 提交工作流
+1. 确保代码通过所有检查：`npm run validate`
+2. 如果 lint 失败：`npm run lint:fix`
+3. 如果格式检查失败：`npm run format`
+4. 如果测试失败：修复测试或代码
+5. 提交代码（precommit hook 会自动验证）
+6. 推送代码（prepush hook 会再次验证）
+
+## 事件系统模式
+
+所有核心模块（SlideManager、Presentation、History、ThemeManager 等）使用统一的自定义事件系统：
+
+```javascript
+// 发送事件
+this.emit('eventName', data);
+
+// 监听事件
+this.on('eventName', (data) => { ... });
+
+// 移除监听
+this.off('eventName', handler);
+```
+
+### 常用事件
+- `SlideManager`: `slideAdded`, `slideRemoved`, `slideUpdated`, `currentSlideChanged`
+- `Presentation`: `start`, `end`, `slideChanged`, `pause`, `resume`
+- `History`: `statePushed`, `undo`, `redo`
+- `ThemeManager`: `themeChanged`
+- `AutoSave`: `saveStart`, `saveSuccess`, `saveError`
+
+## 目录说明
+
+### 忽略/备份文件
+- `*.bak`: 备份文件，不应修改
+- `noRead/`: 旧版本历史文件（HtmlPPT_v1-v7.html），只读参考
+- `dist/`: 构建输出（.gitignore）
+- `node_modules/`: 依赖（.gitignore）
+- `coverage/`: 测试覆盖率报告（.gitignore）
+
+### 文档目录
+- `docs/`: 项目文档
+  - `archive/`: 归档文档（已完成任务、部署指南等）
+  - `quick-start.md`: 快速开始指南
+  - `user-guide.md`: 用户手册
+  - `api.md`: API 文档
+
+### 脚本目录
+- `scripts/`: 辅助脚本
+  - `deploy.sh`: gh-pages 部署脚本
+  - `build.js`: 自定义构建脚本
+  - `test.sh`: 测试运行脚本
+
+## 代码修改检查清单
+
+修改代码时，请确保：
+1. [ ] 代码通过 ESLint 检查：`npm run lint`
+2. [ ] 代码通过 Prettier 格式化：`npm run format`
+3. [ ] 相关测试通过：`npm test`
+4. [ ] 如修改了样式，同步更新 `src/index.html` 内嵌 CSS 和 `src/css/styles.css`
+5. [ ] 如添加新功能，补充相应测试
+6. [ ] 如修改了核心模块，确保事件系统正常工作
+7. [ ] 如修改了数据结构，确保 `toJSON()` / `fromJSON()` 正确实现
+
+## 性能优化建议
+
+- 使用 `debounce` 和 `throttle` 工具函数（`utils.js`）处理频繁触发的事件
+- 避免在事件处理器中执行同步的耗时操作（如大文件导出）
+- 使用 `requestAnimationFrame` 优化动画渲染
+- 批量 DOM 操作减少重排重绘
+- Webpack 已启用代码分割和 Tree Shaking，无需手动优化

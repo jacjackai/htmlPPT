@@ -235,6 +235,7 @@ export class AutoSave {
     this.enabled = options.enabled !== false;
     this.timer = null;
     this.lastSaveTime = null;
+    this.listeners = {};
   }
 
   /**
@@ -262,13 +263,57 @@ export class AutoSave {
    */
   async save() {
     try {
+      this.emit('saveStart');
       await this.saveFn();
       this.lastSaveTime = new Date();
+      this.emit('saveSuccess');
       return true;
     } catch (error) {
       console.error('Auto save error:', error);
+      this.emit('saveError', error);
       return false;
     }
+  }
+
+  /**
+   * Add event listener
+   * @param {string} event - Event name
+   * @param {Function} callback - Callback function
+   */
+  on(event, callback) {
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(callback);
+  }
+
+  /**
+   * Remove event listener
+   * @param {string} event - Event name
+   * @param {Function} callback - Callback function
+   */
+  off(event, callback) {
+    if (this.listeners[event]) {
+      this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback);
+    }
+  }
+
+  /**
+   * Emit event
+   * @param {string} event - Event name
+   * @param {*} data - Event data
+   */
+  emit(event, data) {
+    if (this.listeners[event]) {
+      this.listeners[event].forEach((callback) => callback(data));
+    }
+  }
+
+  /**
+   * Remove all event listeners
+   */
+  removeAllListeners() {
+    this.listeners = {};
   }
 
   /**

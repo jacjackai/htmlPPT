@@ -218,7 +218,9 @@ ${slide.content || ''}
    * @returns {string} HTML string
    */
   markdownToHtml(markdown) {
-    if (!markdown) return '';
+    if (!markdown) {
+      return '';
+    }
 
     let html = this.escapeHtml(markdown);
 
@@ -238,7 +240,7 @@ ${slide.content || ''}
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 
     // Lists
-    html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+    html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
     html = html.replace(/^(\d+)\. (.*$)/gim, '<li>$2</li>');
 
     // Paragraphs

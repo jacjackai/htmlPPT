@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Editable Title</title>
+    <style>
+        #editable-title {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 20px;
+        }
+        #editable-title[contenteditable="true"] {
+            outline: 2px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editable Title Test</h1>
+    <div id="editable-title" contenteditable="true">HTML PPT</div>
+    <div id="result"></div>
+    
+    <script>
+        const titleElement = document.getElementById('editable-title');
+        const resultElement = document.getElementById('result');
+        
+        let currentFilename = 'HTML PPT';
+        
+        function updateTitleDisplay() {
+            titleElement.textContent = currentFilename;
+            resultElement.innerHTML = `Current filename: <strong>${currentFilename}</strong>`;
+        }
+        
+        titleElement.addEventListener('input', () => {
+            currentFilename = titleElement.textContent.trim() || 'HTML PPT';
+            updateTitleDisplay();
+        });
+        
+        titleElement.addEventListener('blur', () => {
+            currentFilename = titleElement.textContent.trim() || 'HTML PPT';
+            updateTitleDisplay();
+        });
+        
+        // Initial display
+        updateTitleDisplay();
+    </script>
+</body>
+</html>

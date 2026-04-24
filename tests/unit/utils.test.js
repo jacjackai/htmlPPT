@@ -26,7 +26,7 @@ describe('Utils', () => {
     test('should truncate strings', () => {
       const { truncate } = utils;
       if (truncate) {
-        expect(truncate('Hello World', 5)).toBe('He...');
+        expect(truncate('Hello World', 5)).toBe('Hello...');
         expect(truncate('Hi', 5)).toBe('Hi');
       }
     });

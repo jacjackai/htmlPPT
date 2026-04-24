@@ -135,7 +135,7 @@ export class ThemeManager {
   constructor(options = {}) {
     this.themes = new Map();
     this.currentTheme = null;
-    this.defaultTheme = options.defaultTheme || 'light';
+    this.defaultTheme = options.defaultTheme || 'dark';
     this.listeners = {};
 
     // Register default themes
@@ -146,24 +146,28 @@ export class ThemeManager {
    * Register default themes
    */
   registerDefaultThemes() {
-    // Light theme
+    // Light theme - Bright and cheerful with golden buttons
     this.register(
       'light',
       new Theme({
         name: 'light',
         colors: {
-          'primary-color': '#4a6fa5',
-          'primary-light': '#7a9dc9',
-          'primary-dark': '#1e456c',
-          'secondary-color': '#6e9cd2',
+          'primary-color': '#ffd700', /* Golden yellow */
+          'primary-light': '#ffed4e',
+          'primary-dark': '#e6c200',
+          'secondary-color': '#ffcc00',
           'bg-color': '#f5f5f7',
           'sidebar-bg': '#2b2d42',
           'slide-bg': '#ffffff',
           'border-color': '#dee2e6',
           'text-color': '#333333',
+          'text-secondary': '#666666',
           'code-bg': '#f8f9fa',
-          'panel-header-bg': '#4a6fa5',
-          'panel-header-color': '#ffffff',
+          'panel-header-bg': '#ffd700',
+          'panel-header-color': '#1f2937',
+          'btn-color': '#ffd700', /* Golden buttons */
+          'btn-color-dark': '#e6c200', /* Darker gold for hover */
+          'btn-text-color': '#1f2937', /* Dark gray text for contrast */
         },
         fonts: {
           heading: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
@@ -178,24 +182,28 @@ export class ThemeManager {
       })
     );
 
-    // Dark theme
+    // Dark theme - Elegant dark with indigo buttons
     this.register(
       'dark',
       new Theme({
         name: 'dark',
         colors: {
-          'primary-color': '#6e9cd2',
-          'primary-light': '#9fc3e9',
-          'primary-dark': '#3a5e8a',
-          'secondary-color': '#8ab6d6',
-          'bg-color': '#1a1c23',
-          'sidebar-bg': '#2b2d42',
-          'slide-bg': '#2d3047',
-          'border-color': '#3a3e5b',
-          'text-color': '#e9e9ec',
-          'code-bg': '#252838',
-          'panel-header-bg': '#3a3e5b',
-          'panel-header-color': '#e9e9ec',
+          'primary-color': '#6366f1', /* Indigo */
+          'primary-light': '#818cf8',
+          'primary-dark': '#4f46e5',
+          'secondary-color': '#8b5cf6', /* Purple accent */
+          'bg-color': '#121212',
+          'sidebar-bg': '#1e1e1e',
+          'slide-bg': '#181818',
+          'border-color': '#333333',
+          'text-color': '#e0e0e0',
+          'text-secondary': '#a0a0a0',
+          'code-bg': '#1e1e1e',
+          'panel-header-bg': '#2a2a2a',
+          'panel-header-color': '#e0e0e0',
+          'btn-color': '#6366f1', /* Indigo buttons */
+          'btn-color-dark': '#4f46e5', /* Darker indigo for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
         },
         fonts: {
           heading: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
@@ -206,6 +214,240 @@ export class ThemeManager {
           small: '0.5rem',
           medium: '1rem',
           large: '2rem',
+        },
+      })
+    );
+
+    // Business theme - Professional blue with matching buttons
+    this.register(
+      'business',
+      new Theme({
+        name: 'business',
+        colors: {
+          'primary-color': '#1a365d', /* Dark blue */
+          'primary-light': '#2c5282',
+          'primary-dark': '#102a4e',
+          'secondary-color': '#2b6cb0',
+          'bg-color': '#f7fafc',
+          'sidebar-bg': '#1a365d',
+          'slide-bg': '#ffffff',
+          'border-color': '#e2e8f0',
+          'text-color': '#2d3748',
+          'text-secondary': '#718096',
+          'code-bg': '#edf2f7',
+          'panel-header-bg': '#1a365d',
+          'panel-header-color': '#ffffff',
+          'btn-color': '#2b6cb0', /* Business blue buttons */
+          'btn-color-dark': '#1a365d', /* Darker blue for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
+        },
+        fonts: {
+          heading: 'Georgia, "Times New Roman", Times, serif',
+          body: 'Arial, Helvetica, sans-serif',
+          code: '"Courier New", Courier, monospace',
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '1rem',
+          lg: '1.5rem',
+          xl: '2rem',
+          xxl: '3rem',
+        },
+      })
+    );
+
+    // Creative theme - Vibrant purple with matching buttons
+    this.register(
+      'creative',
+      new Theme({
+        name: 'creative',
+        colors: {
+          'primary-color': '#9b59b6', /* Purple */
+          'primary-light': '#bb7bd1',
+          'primary-dark': '#7d3c98',
+          'secondary-color': '#e74c3c',
+          'bg-color': '#fdf2f8',
+          'sidebar-bg': '#9b59b6',
+          'slide-bg': '#ffffff',
+          'border-color': '#f3d9fa',
+          'text-color': '#5a3e6b',
+          'text-secondary': '#a0a0a0',
+          'code-bg': '#f8f0fc',
+          'panel-header-bg': '#9b59b6',
+          'panel-header-color': '#ffffff',
+          'btn-color': '#9b59b6', /* Purple buttons */
+          'btn-color-dark': '#7d3c98', /* Darker purple for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
+        },
+        fonts: {
+          heading: '"Comic Sans MS", cursive, sans-serif',
+          body: 'Arial, Helvetica, sans-serif',
+          code: '"Courier New", Courier, monospace',
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '1rem',
+          lg: '1.5rem',
+          xl: '2rem',
+          xxl: '3rem',
+        },
+      })
+    );
+
+    // Minimal theme - Clean white with subtle gray buttons
+    this.register(
+      'minimal',
+      new Theme({
+        name: 'minimal',
+        colors: {
+          'primary-color': '#6c757d', /* Gray */
+          'primary-light': '#adb5bd',
+          'primary-dark': '#495057',
+          'secondary-color': '#f5f5f5',
+          'bg-color': '#ffffff',
+          'sidebar-bg': '#f8f9fa',
+          'slide-bg': '#ffffff',
+          'border-color': '#e9ecef',
+          'text-color': '#212529',
+          'text-secondary': '#6c757d',
+          'code-bg': '#f8f9fa',
+          'panel-header-bg': '#e9ecef',
+          'panel-header-color': '#212529',
+          'btn-color': '#6c757d', /* Gray buttons */
+          'btn-color-dark': '#495057', /* Darker gray for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
+        },
+        fonts: {
+          heading: 'Helvetica, Arial, sans-serif',
+          body: 'Helvetica, Arial, sans-serif',
+          code: '"Courier New", Courier, monospace',
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '1rem',
+          lg: '1.5rem',
+          xl: '2rem',
+          xxl: '3rem',
+        },
+      })
+    );
+
+    // Ocean theme - Sky blue with matching buttons
+    this.register(
+      'ocean',
+      new Theme({
+        name: 'ocean',
+        colors: {
+          'primary-color': '#29b6f6', /* Sky blue */
+          'primary-light': '#4fc3f7',
+          'primary-dark': '#0288d1',
+          'secondary-color': '#4fc3f7',
+          'bg-color': '#e3f2fd',
+          'sidebar-bg': '#29b6f6',
+          'slide-bg': '#ffffff',
+          'border-color': '#90caf9',
+          'text-color': '#0d47a1',
+          'text-secondary': '#5472d3',
+          'code-bg': '#e3f2fd',
+          'panel-header-bg': '#1565c0',
+          'panel-header-color': '#ffffff',
+          'btn-color': '#29b6f6', /* Sky blue buttons */
+          'btn-color-dark': '#0288d1', /* Darker blue for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
+        },
+        fonts: {
+          heading: 'Georgia, "Times New Roman", Times, serif',
+          body: 'Arial, Helvetica, sans-serif',
+          code: '"Courier New", Courier, monospace',
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '1rem',
+          lg: '1.5rem',
+          xl: '2rem',
+          xxl: '3rem',
+        },
+      })
+    );
+
+    // Forest theme - Nature green with matching buttons
+    this.register(
+      'forest',
+      new Theme({
+        name: 'forest',
+        colors: {
+          'primary-color': '#388e3c', /* Green */
+          'primary-light': '#4caf50',
+          'primary-dark': '#1b5e20',
+          'secondary-color': '#66bb6a',
+          'bg-color': '#e8f5e9',
+          'sidebar-bg': '#388e3c',
+          'slide-bg': '#ffffff',
+          'border-color': '#c8e6c9',
+          'text-color': '#1b5e20',
+          'text-secondary': '#558b2f',
+          'code-bg': '#f1f8e9',
+          'panel-header-bg': '#2e7d32',
+          'panel-header-color': '#ffffff',
+          'btn-color': '#4caf50', /* Green buttons */
+          'btn-color-dark': '#2e7d32', /* Darker green for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
+        },
+        fonts: {
+          heading: 'Georgia, "Times New Roman", Times, serif',
+          body: 'Arial, Helvetica, sans-serif',
+          code: '"Courier New", Courier, monospace',
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '1rem',
+          lg: '1.5rem',
+          xl: '2rem',
+          xxl: '3rem',
+        },
+      })
+    );
+
+    // Sunset theme - Warm orange with matching buttons
+    this.register(
+      'sunset',
+      new Theme({
+        name: 'sunset',
+        colors: {
+          'primary-color': '#ff8f00', /* Orange */
+          'primary-light': '#ff9800',
+          'primary-dark': '#e65100',
+          'secondary-color': '#ff8a65',
+          'bg-color': '#fff8e1',
+          'sidebar-bg': '#ff8f00',
+          'slide-bg': '#ffffff',
+          'border-color': '#ffcc80',
+          'text-color': '#e65100',
+          'text-secondary': '#f57c00',
+          'code-bg': '#fff3e0',
+          'panel-header-bg': '#f57c00',
+          'panel-header-color': '#ffffff',
+          'btn-color': '#ff8f00', /* Orange buttons */
+          'btn-color-dark': '#e65100', /* Darker orange for hover */
+          'btn-text-color': '#ffffff', /* White text for contrast */
+        },
+        fonts: {
+          heading: 'Georgia, "Times New Roman", Times, serif',
+          body: 'Arial, Helvetica, sans-serif',
+          code: '"Courier New", Courier, monospace',
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '1rem',
+          lg: '1.5rem',
+          xl: '2rem',
+          xxl: '3rem',
         },
       })
     );

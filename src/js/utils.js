@@ -59,7 +59,7 @@ export function deepClone(obj) {
   if (obj instanceof Object) {
     const clonedObj = {};
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
         clonedObj[key] = deepClone(obj[key]);
       }
     }
@@ -106,7 +106,9 @@ export function formatDate(date, format = 'YYYY-MM-DD HH:mm:ss') {
  * @returns {string} Formatted file size
  */
 export function formatFileSize(bytes) {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) {
+    return '0 Bytes';
+  }
 
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -123,7 +125,9 @@ export function formatFileSize(bytes) {
  * @returns {string} Truncated string
  */
 export function truncate(str, length = 100, suffix = '...') {
-  if (str.length <= length) return str;
+  if (str.length <= length) {
+    return str;
+  }
   return str.substring(0, length) + suffix;
 }
 

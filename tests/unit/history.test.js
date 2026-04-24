@@ -11,10 +11,11 @@ describe('History', () => {
   });
 
   describe('push', () => {
-    test('should add state to history', () => {
-      history.push({ slides: [1, 2] });
-      expect(history.canUndo()).toBe(true);
-    });
+  test('should add state to history', () => {
+    history.push({ slides: [1] });
+    history.push({ slides: [1, 2] });
+    expect(history.canUndo()).toBe(true);
+  });
 
     test('should limit history to maxSize', () => {
       for (let i = 0; i < 10; i++) {

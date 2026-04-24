@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>中文输入测试</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        #test-title {
+            font-size: 24px;
+            padding: 10px 15px;
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            outline: none;
+            min-width: 200px;
+            cursor: text;
+            margin: 10px 0;
+        }
+        
+        #test-title:focus {
+            border-color: #3b82f6;
+            background-color: #f0f7ff;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .success {
+            color: #28a745;
+        }
+        
+        .error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>中文输入测试</h1>
+    <p>请在下面的可编辑标题中输入中文，测试输入法支持：</p>
+    
+    <div class="test-section">
+        <h3>1. 可编辑标题测试</h3>
+        <h2 id="test-title" contenteditable="true" spellcheck="false" lang="zh-CN" data-placeholder="请输入中文标题">演示文稿</h2>
+        <div class="result" id="result1">等待输入...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. 复杂中文测试</h3>
+        <p>尝试输入以下内容：</p>
+        <ul>
+            <li>简单中文：你好世界</li>
+            <li>复杂中文：演示文稿制作工具</li>
+            <li>带标点：《HTML PPT用户指南》</li>
+            <li>混合内容：项目报告 - Q3财务分析</li>
+        </ul>
+        <div class="result" id="result2">准备好测试复杂输入</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. 输入法测试</h3>
+        <p>请切换到中文输入法（如拼音、五笔等）并尝试输入。</p>
+        <div class="result" id="result3">等待输入法测试</div>
+    </div>
+    
+    <script>
+        const testTitle = document.getElementById('test-title');
+        const result1 = document.getElementById('result1');
+        const result2 = document.getElementById('result2');
+        const result3 = document.getElementById('result3');
+        
+        testTitle.addEventListener('input', function() {
+            const content = this.textContent.trim();
+            result1.innerHTML = `<strong class="success">✓ 当前内容:</strong> "${content}" (长度: ${content.length} 字符)`;
+            
+            // Test complex Chinese
+            if (content.includes('演示') || content.includes('文稿') || content.includes('项目')) {
+                result2.innerHTML = `<strong class="success">✓ 复杂中文输入成功!</strong> ${content}`;
+            }
+            
+            // Test IME input
+            if (content.length > 0) {
+                result3.innerHTML = `<strong class="success">✓ 输入法工作正常!</strong> 可以输入中文。`;
+            }
+        });
+        
+        testTitle.addEventListener('blur', function() {
+            const content = this.textContent.trim();
+            if (content) {
+                alert(`标题已保存: ${content}`);
+            }
+        });
+        
+        // Test placeholder
+        testTitle.addEventListener('focus', function() {
+            if (this.textContent.trim() === '') {
+                this.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>

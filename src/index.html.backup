@@ -38,26 +38,135 @@
 						<i class="fas fa-redo"></i> 重做
 					</button>
 
-					<div class="file-dropdown" id="fileDropdown">
-						<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
-							<i class="fas fa-file"></i> 文件
-							<i class="fas fa-chevron-down dropdown-arrow"></i>
-						</button>
-						<div class="file-dropdown-content">
-							<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
-								<i class="fas fa-file"></i> 新建
-							</div>
-							<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
-								<i class="fas fa-folder-open"></i> 打开
-							</div>
-							<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
-								<i class="fas fa-save"></i> 保存
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
 							</div>
 						</div>
-					</div>
-
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
+							</div>
+						</div>
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
+							</div>
+						</div>
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
+							</div>
+						</div>
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
+							</div>
+						</div>
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
+							</div>
+						</div>
+<div class="file-dropdown" id="fileDropdown">
+							<button class="header-btn file-selector-btn tooltip" id="fileSelectorBtn" data-tooltip="文件操作">
+								<i class="fas fa-file"></i> 文件
+								<i class="fas fa-chevron-down dropdown-arrow"></i>
+							</button>
+							<div class="file-dropdown-content">
+								<div class="file-option" id="fileNew" data-tooltip="新建项目 (Ctrl+N)">
+									<i class="fas fa-file"></i> 新建
+								</div>
+								<div class="file-option" id="fileOpen" data-tooltip="打开项目 (Ctrl+O)">
+									<i class="fas fa-folder-open"></i> 打开
+								</div>
+								<div class="file-option" id="fileSave" data-tooltip="保存项目 (Ctrl+S)">
+									<i class="fas fa-save"></i> 保存
+								</div>
+							</div>
+						</div>
+					</button>
 					<button class="header-btn present-btn tooltip" id="presentBtn" data-tooltip="演示模式">
-<							<i class="fas fa-play"></i> 演示
+						<i class="fas fa-play"></i> 演示模式
 					</button>
 					<div class="theme-dropdown" id="themeDropdown">
 						<button class="header-btn theme-selector-btn tooltip" id="themeSelectorBtn" data-tooltip="选择主题">
@@ -97,6 +206,8 @@
 			</div>
 		</div>
 	</div>
+
+
 
 	<div class="presentation-mode" id="presentationMode">
 		<div class="slide-container">

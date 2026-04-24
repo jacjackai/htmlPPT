@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Sharing Test</title>
+</head>
+<body>
+    <h1>URL Sharing Test</h1>
+    <div id="result"></div>
+    
+    <script>
+        // Test encoding/decoding
+        const testData = {
+            version: '1.0.0',
+            savedAt: '2023-01-01T00:00:00.000Z',
+            slides: [
+                {
+                    id: 'slide_1',
+                    title: 'Test Slide',
+                    content: '<h1>Hello World</h1><p>This is a test</p>',
+                    theme: null,
+                    createdAt: '2023-01-01T00:00:00.000Z',
+                    updatedAt: '2023-01-01T00:00:00.000Z'
+                }
+            ],
+            theme: 'light'
+        };
+        
+        // Encode
+        const jsonString = JSON.stringify(testData);
+        const encoded = btoa(encodeURIComponent(jsonString));
+        
+        // Create URL
+        const url = new URL(window.location.href);
+        url.searchParams.set('mode', 'presentation');
+        url.searchParams.set('data', encoded);
+        
+        // Decode
+        const params = new URLSearchParams(url.search);
+        const data = params.get('data');
+        const decodedData = decodeURIComponent(atob(data));
+        const parsedData = JSON.parse(decodedData);
+        
+        // Display results
+        document.getElementById('result').innerHTML = `
+            <h2>Test Results</h2>
+            <p><strong>Original Data:</strong> ${JSON.stringify(testData, null, 2)}</p>
+            <p><strong>Encoded URL:</strong> <a href="${url}" target="_blank">${url}</a></p>
+            <p><strong>Decoded Data:</strong> ${JSON.stringify(parsedData, null, 2)}</p>
+            <p><strong>Match:</strong> ${JSON.stringify(testData) === JSON.stringify(parsedData) ? '✅ SUCCESS' : '❌ FAILED'}</p>
+        `;
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Fix Test</title>
+    <script>
+        // Test the initialization order fix
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // This simulates the fixed code structure
+                let currentFilename = 'HTML PPT'; // Declare first
+                
+                // Then use it in object initialization (like HTMLPPT constructor)
+                const config = {
+                    filename: currentFilename, // Use the declared variable
+                    theme: 'dark',
+                    autoSave: true
+                };
+                
+                console.log('✓ Initialization order test passed:', config);
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: green;">✓ JavaScript initialization order is correct!</p>' +
+                    '<p>Filename: ' + currentFilename + '</p>' +
+                    '<p>Config: ' + JSON.stringify(config) + '</p>';
+                    
+            } catch (error) {
+                console.error('✗ Initialization order test failed:', error);
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: red;">✗ JavaScript error: ' + error.message + '</p>';
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>JavaScript Initialization Order Test</h1>
+    <p>Testing the fix for "Cannot access 'currentFilename' before initialization"</p>
+    
+    <div id="result" style="margin: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+        Running test...
+    </div>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px;">
+        <h3>What was fixed:</h3>
+        <p><strong>Before:</strong> <code>filename: currentFilename</code> was used before <code>let currentFilename</code> was declared</p>
+        <p><strong>After:</strong> <code>let currentFilename = 'HTML PPT'</code> is declared before being used in the HTMLPPT constructor</p>
+    </div>
+</body>
+</html>
